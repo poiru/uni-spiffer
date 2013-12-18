@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Birunthan Mohanathas.
+ * Copyright (C) 2013 Birunthan Mohanathas
  *
  * Licensed under the MIT license <http://opensource.org/licenses/MIT>. This
  * file may not be copied, modified, or distributed except according to those
@@ -8,14 +8,15 @@
 
 package com.mohanathas.spiffer;
 
+import com.mohanathas.spiffer.ui.MainWindow;
+import javax.swing.SwingUtilities;
+
 /**
  * Entry point.
  *
  */
-public class App 
-{
-    public static void main(String[] args)
-    {
-        System.out.println("Hello World!");
+public class App {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new MainWindow());
     }
 }
