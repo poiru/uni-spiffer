@@ -19,15 +19,20 @@ public class NodeGridTest {
     }
 
     @Test
-    public void testGetNode() {
+    public void testGetNodeWithinBounds() {
         NodeGrid grid = new NodeGrid(4, 2);
         assertNotNull(grid.getNode(0, 0));
         assertNotNull(grid.getNode(1, 0));
         assertNotNull(grid.getNode(0, 1));
         assertNotNull(grid.getNode(2, 1));
-
-        assertNull(grid.getNode(4, 0));
-        assertNull(grid.getNode(0, 2));
     }
 
+    @Test
+    public void testGetNodeOutOfBounds() {
+        NodeGrid grid = new NodeGrid(1, 1);
+        assertNull(grid.getNode(-1, 0));
+        assertNull(grid.getNode(0, -1));
+        assertNull(grid.getNode(1, 0));
+        assertNull(grid.getNode(0, 1));
+    }
 }

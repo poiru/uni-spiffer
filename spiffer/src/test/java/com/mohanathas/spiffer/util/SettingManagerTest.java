@@ -52,7 +52,7 @@ public class SettingManagerTest {
         sm.setSetting("a", "1");
         sm.setSetting("b", 2);
         assertEquals("1", sm.getSetting("a", ""));
-        assertEquals("2", sm.getSetting("b", ""));
+        assertEquals(2, sm.getSetting("b", 0));
 
         sm.setSetting("b", 3);
         assertEquals("3", sm.getSetting("b", ""));
