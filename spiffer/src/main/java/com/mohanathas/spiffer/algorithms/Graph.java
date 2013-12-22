@@ -39,7 +39,7 @@ public class Graph {
     }
 
     /**
-     * Finds a list of Points connecting the Nodes at |startPos| and |endPos|.
+     * Finds a list of Points connecting the nodes at |startPos| and |endPos|.
      *
      * @param finder A PathFinder instance used for the search.
      * @param startPos Start position.

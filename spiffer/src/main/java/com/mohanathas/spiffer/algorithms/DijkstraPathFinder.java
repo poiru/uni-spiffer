@@ -26,9 +26,9 @@ public class DijkstraPathFinder implements PathFinder {
     @Override
     public List<Point> findPath(Graph graph, Node startNode, Node endNode) {
         final PriorityQueue<Node> heap = new PriorityQueue<>();
-      	heap.add(startNode);
+        heap.add(startNode);
 
-	while (!heap.isEmpty()) {
+	do {
 	    final Node node = heap.poll();
             if (node.equals(endNode)){
                 return node.getParentPoints();
@@ -40,7 +40,7 @@ public class DijkstraPathFinder implements PathFinder {
             relax(heap, node, graph.getNode(node.getX(), node.getY() + 1));
 
             node.markVisited();
-        }
+        } while (!heap.isEmpty());
 
         return null;
     }

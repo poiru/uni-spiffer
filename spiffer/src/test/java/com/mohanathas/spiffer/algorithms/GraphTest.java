@@ -37,4 +37,12 @@ public class GraphTest {
         assertNull(g.getNode(1, 0));
         assertNull(g.getNode(0, 1));
     }
+
+    @Test
+    public void testCreateFromIntArray() {
+        assertNull(Graph.createFromIntArray(null));
+        assertNull(Graph.createFromIntArray(new int[][] {}));
+        assertNull(Graph.createFromIntArray(new int[][] {{}}));
+        assertNull(Graph.createFromIntArray(new int[][] {{1}, {1, 2}}));
+    }
 }

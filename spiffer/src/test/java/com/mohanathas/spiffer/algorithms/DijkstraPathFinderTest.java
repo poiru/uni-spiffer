@@ -23,8 +23,12 @@ public class DijkstraPathFinderTest {
 
     private void assertPathSizeEquals(int expected, Graph g, int x1, int y1, int x2, int y2) {
         final List<Point> path = g.findPath(new DijkstraPathFinder(), new Point(x1, y1), new Point(x2, y2));
-        assertNotNull(path);
-        assertEquals(expected, path.size());
+        if (expected == 0) {
+            assertNull(path);
+        } else {
+            assertNotNull(path);
+            assertEquals(expected, path.size());
+        }
     }
 
     @Test
@@ -40,7 +44,7 @@ public class DijkstraPathFinderTest {
     }
 
     @Test
-    public void testValidPathSizes() {
+    public void testValidPaths() {
         final Graph g = Graph.createFromIntArray(new int[][] {
             {1, 1, 1, 1},
             {1, 1, 1, 1},
@@ -50,7 +54,18 @@ public class DijkstraPathFinderTest {
     }
 
     @Test
-    public void testValidPathSizesWithWalls() {
+    public void testPath() {
+        final Graph g = Graph.createFromIntArray(new int[][] {
+            {1, 0, 1},
+            {1, 1, 1}});
+        final List<Point> path = g.findPath(new DijkstraPathFinder(), new Point(0, 0), new Point(2, 0));
+        assertEquals(path.get(0), new Point(0, 1));
+        assertEquals(path.get(1), new Point(1, 1));
+        assertEquals(path.get(2), new Point(2, 1));
+    }
+
+    @Test
+    public void testValidPathsWithWalls() {
         final Graph g = Graph.createFromIntArray(new int[][] {
             {1, 0, 1, 1, 1},
             {1, 1, 0, 0, 1},
@@ -59,5 +74,15 @@ public class DijkstraPathFinderTest {
         assertPathSizeEquals(12, g, 0, 0, 2, 0);
         assertPathSizeEquals(7, g, 0, 0, 3, 2);
         assertPathSizeEquals(9, g, 0, 0, 4, 3);
+    }
+
+    @Test
+    public void testInvalidPaths() {
+        final Graph g = Graph.createFromIntArray(new int[][] {
+            {1, 0, 1},
+            {1, 0, 0},
+            {1, 1, 1}});
+        assertPathSizeEquals(0, g, 0, 0, 2, 0);
+        assertPathSizeEquals(0, g, 1, 2, 2, 0);
     }
 }

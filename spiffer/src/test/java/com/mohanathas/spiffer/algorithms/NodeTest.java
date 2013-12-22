@@ -20,9 +20,15 @@ public class NodeTest {
 
     @Test
     public void testConstructor() {
-        Node node = new Node(1, 2);
+        final Node node = new Node(1, 2);
         assertEquals(1, node.getX());
         assertEquals(2, node.getY());
         assertEquals(0, node.getWeight());
+    }
+
+    @Test
+    public void testToString() {
+        final Node node = new Node(1, 2);
+        assertEquals("(1, 2)", node.toString());
     }
 }
