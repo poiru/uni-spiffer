@@ -20,24 +20,9 @@ public class NodeTest {
 
     @Test
     public void testConstructor() {
-        Node node = new Node(1, 2, 3.0);
+        Node node = new Node(1, 2);
         assertEquals(1, node.getX());
         assertEquals(2, node.getY());
-        assertEquals(3.0, node.getWeight(), 0.001);
-    }
-
-    @Test
-    public void testAddNeighbours() {
-        Node node1 = new Node(1, 1, 1.0);
-        Node node2 = new Node(2, 2, 3.0);
-        Node node3 = new Node(3, 2, 3.0);
-
-        assertEquals(0, node1.getNeighbours().size());
-        node1.addNeighbour(node2);
-        node1.addNeighbour(node3);
-        assertEquals(2, node1.getNeighbours().size());
-
-        assertEquals(node2, node1.getNeighbours().get(0));
-        assertEquals(node3, node1.getNeighbours().get(1));
+        assertEquals(0, node.getWeight());
     }
 }

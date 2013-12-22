@@ -8,41 +8,100 @@
 
 package com.mohanathas.spiffer.algorithms;
 
+import com.mohanathas.spiffer.util.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Represents a node in a graph.
  */
-public class Node {
-    private int mX = 0;
-    private int mY = 0;
-    private double mWeight = 0.0;
-    private final ArrayList<Node> mNeighbours = new ArrayList<>();
+class Node implements Comparable<Node> {
+    private final Point mPoint;
+    private boolean mWall = false;
 
-    public Node(int x, int y, double weight) {
-        mX = x;
-        mY = y;
-        mWeight = weight;
+    private int mWeight = 0;
+    private Node mParent = null;
+    private boolean mVisited = false;
+    
+    public Node(int x, int y) {
+        mPoint = new Point(x, y);
     }
 
     public int getX() {
-        return mX;
+        return mPoint.getX();
     }
 
     public int getY() {
-        return mY;
+        return mPoint.getY();
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return mWeight;
     }
 
-    public List<Node> getNeighbours() {
-        return mNeighbours;
+    public void setWeight(int weight) {
+        mWeight = weight;
     }
 
-    public void addNeighbour(Node neighbour) {
-        mNeighbours.add(neighbour);
+    public Node getParent() {
+        return mParent;
+    }
+
+    public void setParent(Node parent) {
+        mParent = parent;
+    }
+
+    public boolean isWall() {
+        return mWall;
+    }
+
+    public void setWall(boolean wall) {
+        mWall = wall;
+    }
+
+    public boolean isVisited() {
+        return mVisited;
+    }
+
+    public void markVisited() {
+        mVisited = true;
+    }
+
+    /**
+     * Resets this fields of this instance to their initial state.
+     */
+    public void reset() {
+        mWeight = 0;
+        mVisited = false;
+        mParent = null;
+    }
+
+    /**
+     * @return A list of parents excluding the furthest parent in reverse order.
+     */
+    public List<Point> getParentPoints() {
+        final List<Point> list = new ArrayList<>();
+        Node node = this;
+        while (node != null) {
+            list.add(node.mPoint);
+            node = node.getParent();
+        }
+
+        // Remove the start node.
+        list.remove(list.size() - 1);
+
+        Collections.reverse(list);
+        return list;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%d, %d)", getX(), getY());
+    }
+
+    @Override
+    public int compareTo(Node that) {
+        return (int)(mWeight - that.mWeight);
     }
 }
