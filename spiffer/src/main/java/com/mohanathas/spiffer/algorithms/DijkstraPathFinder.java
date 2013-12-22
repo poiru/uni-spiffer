@@ -28,8 +28,8 @@ public class DijkstraPathFinder implements PathFinder {
         final PriorityQueue<Node> heap = new PriorityQueue<>();
         heap.add(startNode);
 
-	do {
-	    final Node node = heap.poll();
+        do {
+            final Node node = heap.poll();
             if (node.equals(endNode)){
                 return node.getParentPoints();
             }
