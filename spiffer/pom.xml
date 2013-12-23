@@ -22,15 +22,28 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
+        <configuration>
+          <instrumentation>
+            <includes>
+              <include>com/mohanathas/spiffer/algorithms/*.class</include>
+              <include>com/mohanathas/spiffer/util/*.class</include>
+            </includes>
+          </instrumentation>
+        </configuration>
         <version>2.6</version>
       </plugin>
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
         <configuration>
-          <excludedClasses>
-            <param>com.mohanathas.spiffer.ui.*</param>
-          </excludedClasses>
+          <targetClasses>
+            <param>com.mohanathas.spiffer.algorithms.*</param>
+            <param>com.mohanathas.spiffer.util.*</param>
+          </targetClasses>
+          <targetTests>
+            <param>com.mohanathas.spiffer.algorithms.*</param>
+            <param>com.mohanathas.spiffer.util.*</param>
+          </targetTests>
         </configuration>
         <version>0.30</version>
       </plugin>
