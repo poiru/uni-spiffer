@@ -15,10 +15,19 @@ import java.util.List;
  * graph.
  */
 public class Graph {
-    private final Node[][] mGrid;
+    private Node[][] mGrid;
 
     public Graph(int width, int height) {
         mGrid = new Node[height][width];
+        reset();
+    }
+
+    public int getHeight() {
+        return mGrid.length;
+    }
+
+    public int getWidth() {
+        return mGrid.length > 0 ? mGrid[0].length : 0;
     }
 
     /**
@@ -35,6 +44,41 @@ public class Graph {
 
     Node getNode(GraphPoint point) {
         return getNode(point.getX(), point.getY());
+    }
+
+    /**
+     * Checks if a point has been visited (by a call to |findPath|).
+     *
+     * @param point Point to check.
+     * @return True if the point has been visited.
+     */
+    public boolean isVisited(GraphPoint point) {
+        final Node node = getNode(point);
+        return node != null ? node.isVisited() : false;
+    }
+
+    /**
+     * Checks if a point is a wall.
+     *
+     * @param point Point to check.
+     * @return True if the point is a wall.
+     */
+    public boolean isWall(GraphPoint point) {
+        final Node node = getNode(point);
+        return node != null ? node.isWall() : false;
+    }
+
+    /**
+     * Sets or unsets a point as a wall.
+     *
+     * @param point Point to set.
+     * @param wall New wall state of the point.
+     */
+    public void setWall(GraphPoint point, boolean wall) {
+        final Node node = getNode(point);
+        if (node != null) {
+            node.setWall(wall);
+        }
     }
 
     /**
@@ -65,6 +109,58 @@ public class Graph {
                     mGrid[y][x].reset();
                 }
             }
+        }
+    }
+
+    /**
+     * Resize the graph while keeping the Nodes within the new bounds intact.
+     * 
+     * @param width New width.
+     * @param height New height.
+     */
+    public void resize(int width, int height) {
+        if (width == mGrid.length && height == mGrid[0].length) return;
+        
+        Node[][] newGrid = new Node[height][width];
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                newGrid[y][x] = getNode(x, y);
+                if (newGrid[y][x] == null) {
+                    newGrid[y][x] = new Node(x, y);
+                }
+            }
+        }
+        mGrid = newGrid;
+    }
+
+    public String serialize() {
+        final StringBuilder sb = new StringBuilder();
+        for (int y = 0; y < mGrid.length; ++y) {
+            for (int x = 0; x < mGrid[y].length; ++x) {
+                sb.append(mGrid[y][x].isWall() ? '#' : '.');
+            }
+
+            sb.append('\n');
+        }
+
+        return sb.toString();
+    }
+
+    public void deserialize(String data) {
+        int x = 0;
+        int y = 0;
+        for (char ch : data.toCharArray()) {
+            if (ch == '\n') {
+                x = 0;
+                ++y;
+                continue;
+            }
+
+            if (y < mGrid.length && x < mGrid[0].length) {
+                mGrid[y][x].setWall(ch == '#');
+            }
+
+            ++x;
         }
     }
 

@@ -19,6 +19,14 @@ public class GraphTest {
     }
 
     @Test
+    public void testSerialize() {
+        final Graph g = Graph.createFromIntArray(new int[][] {
+            {0, 1, 1},
+            {1, 0, 1}});
+        assertEquals("#..\n.#.\n", g.serialize());
+    }
+
+    @Test
     public void testGetNodeWithinBounds() {
         Graph g = new Graph(4, 2);
         g.reset();

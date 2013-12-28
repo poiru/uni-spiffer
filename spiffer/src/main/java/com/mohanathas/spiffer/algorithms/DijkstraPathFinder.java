@@ -33,6 +33,10 @@ public class DijkstraPathFinder implements PathFinder {
                 return node.getParentPoints();
             }
 
+            if (node.isVisited()) {
+                continue;
+            }
+
             relax(heap, node, graph.getNode(node.getX() - 1, node.getY()));
             relax(heap, node, graph.getNode(node.getX() + 1, node.getY()));
             relax(heap, node, graph.getNode(node.getX(), node.getY() - 1));
