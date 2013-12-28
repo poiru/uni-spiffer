@@ -8,7 +8,6 @@
 
 package com.mohanathas.spiffer;
 
-import com.mohanathas.spiffer.ui.MainWindow;
 import javax.swing.SwingUtilities;
 
 /**
@@ -17,6 +16,10 @@ import javax.swing.SwingUtilities;
  */
 public class App {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new MainWindow());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            }
+        });
     }
 }
