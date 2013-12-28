@@ -23,7 +23,7 @@ public class NodeTest {
         final Node node = new Node(1, 2);
         assertEquals(1, node.getX());
         assertEquals(2, node.getY());
-        assertEquals(0, node.getWeight());
+        assertEquals(0, node.getDistance());
     }
 
     @Test

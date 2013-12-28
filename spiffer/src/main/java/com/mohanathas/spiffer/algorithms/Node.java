@@ -19,7 +19,7 @@ class Node implements Comparable<Node> {
     private final GraphPoint mPoint;
     private boolean mWall = false;
 
-    private int mWeight = 0;
+    private double mDistance = Double.MAX_VALUE;
     private Node mParent = null;
     private boolean mVisited = false;
 
@@ -39,12 +39,12 @@ class Node implements Comparable<Node> {
         return mPoint;
     }
 
-    public int getWeight() {
-        return mWeight;
+    public double getDistance() {
+        return mDistance;
     }
 
-    public void setWeight(int weight) {
-        mWeight = weight;
+    public void setDistance(double distance) {
+        mDistance = distance;
     }
 
     public Node getParent() {
@@ -75,7 +75,7 @@ class Node implements Comparable<Node> {
      * Resets this fields of this instance to their initial state.
      */
     public void reset() {
-        mWeight = 0;
+        mDistance = Double.MAX_VALUE;
         mVisited = false;
         mParent = null;
     }
@@ -105,6 +105,6 @@ class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node that) {
-        return (int)(mWeight - that.mWeight);
+        return Double.compare(mDistance, that.mDistance);
     }
 }

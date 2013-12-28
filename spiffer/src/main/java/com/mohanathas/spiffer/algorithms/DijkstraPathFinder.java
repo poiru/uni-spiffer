@@ -26,6 +26,7 @@ public class DijkstraPathFinder implements PathFinder {
     public List<GraphPoint> findPath(Graph graph, Node startNode, Node endNode) {
         final PriorityQueue<Node> heap = new PriorityQueue<>();
         heap.add(startNode);
+        startNode.setDistance(0.0);
 
         do {
             final Node node = heap.poll();
@@ -37,10 +38,29 @@ public class DijkstraPathFinder implements PathFinder {
                 continue;
             }
 
-            relax(heap, node, graph.getNode(node.getX() - 1, node.getY()));
-            relax(heap, node, graph.getNode(node.getX() + 1, node.getY()));
-            relax(heap, node, graph.getNode(node.getX(), node.getY() - 1));
-            relax(heap, node, graph.getNode(node.getX(), node.getY() + 1));
+            for (int y = -1; y <= 1; ++y) {
+                for (int x = -1; x <= 1; ++x) {
+                    if (y == 0 && x == 0) {
+                        continue;
+                    }
+
+                    final boolean diagonal = x != 0 && y != 0;
+                    final Node neighborNode = graph.getNode(node.getX() + x, node.getY() + y);
+                    if (neighborNode == null || neighborNode.isWall() || neighborNode.isVisited()) {
+                        continue;
+                    }
+
+                    // Disallow diagonal movement if the shared neighbours of the node and the
+                    // neighbour node are both walls.
+                    if (diagonal &&
+                        graph.getNode(node.getX(), node.getY() + y).isWall() &&
+                        graph.getNode(node.getX() + x, node.getY()).isWall()) {
+                        continue;
+                    }
+
+                    relax(heap, node, neighborNode, diagonal ? Math.sqrt(2.0) : 1.0);
+                }
+            }
 
             node.markVisited();
         } while (!heap.isEmpty());
@@ -48,9 +68,9 @@ public class DijkstraPathFinder implements PathFinder {
         return null;
     }
 
-    private void relax(PriorityQueue<Node> heap, Node node, Node neighborNode) {
-        if (neighborNode != null && !neighborNode.isWall() && !neighborNode.isVisited()) {
-            neighborNode.setWeight(node.getWeight() + 1);
+    private void relax(PriorityQueue<Node> heap, Node node, Node neighborNode, double distance) {
+        if (neighborNode.getDistance() > node.getDistance() + distance) {
+            neighborNode.setDistance(node.getDistance() + distance);
             neighborNode.setParent(node);
             heap.add(neighborNode);
         }
