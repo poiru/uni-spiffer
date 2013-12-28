@@ -8,6 +8,7 @@
 
 package com.mohanathas.spiffer;
 
+import com.mohanathas.spiffer.ui.MainFrame;
 import javax.swing.SwingUtilities;
 
 /**
@@ -19,6 +20,7 @@ public class App {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                final MainFrame mainFrame = new MainFrame();
             }
         });
     }

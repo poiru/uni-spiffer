@@ -14,12 +14,12 @@ import java.util.List;
  * Container of Nodes for every combination of X and Y within the bounds of the
  * graph.
  */
-public class Graph {
-    private Node[][] mGrid;
+public final class Graph {
+    private Node[][] mGrid = new Node[1][1];
+    private boolean mDirty = false;
 
     public Graph(int width, int height) {
-        mGrid = new Node[height][width];
-        reset();
+        resize(width, height);
     }
 
     public int getHeight() {
@@ -90,25 +90,28 @@ public class Graph {
      * @return List of Points if a path was found or |null| otherwise.
      */
     public List<GraphPoint> findPath(PathFinder finder, GraphPoint startPos, GraphPoint endPos) {
-        // We need to clear e.g. the visited flag of the nodes.
-        reset();
+        if (mDirty) {
+            // We need to clear e.g. the visited flag of the nodes.
+            reset();
+        }
 
-        List<GraphPoint> path = finder.findPath(this, getNode(startPos), getNode(endPos));
+        final List<GraphPoint> path = finder.findPath(this, getNode(startPos), getNode(endPos));
+        mDirty = true;
         return path;
     }
 
     /**
-     * Creates or resets the nodes in the grid.
+     * Resets the nodes in the grid if needed.
      */
-    void reset() {
-        for (int y = 0; y < mGrid.length; ++y) {
-            for (int x = 0; x < mGrid[y].length; ++x) {
-                if (mGrid[y][x] == null) {
-                    mGrid[y][x] = new Node(x, y);
-                } else {
+    public void reset() {
+        if (mDirty) {
+            for (int y = 0; y < mGrid.length; ++y) {
+                for (int x = 0; x < mGrid[y].length; ++x) {
                     mGrid[y][x].reset();
                 }
             }
+
+            mDirty = false;
         }
     }
 
