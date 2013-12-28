@@ -48,7 +48,7 @@ public class DijkstraPathFinderTest {
             {1, 1, 1, 1},
             {1, 1, 1, 1}});
         assertPathSizeEquals(3, g, 0, 0, 3, 0);
-        assertPathSizeEquals(5, g, 0, 0, 3, 2);
+        assertPathSizeEquals(3, g, 0, 0, 3, 2);
     }
 
     @Test
@@ -57,9 +57,8 @@ public class DijkstraPathFinderTest {
             {1, 0, 1},
             {1, 1, 1}});
         final List<GraphPoint> path = g.findPath(new DijkstraPathFinder(), new GraphPoint(0, 0), new GraphPoint(2, 0));
-        assertEquals(path.get(0), new GraphPoint(0, 1));
-        assertEquals(path.get(1), new GraphPoint(1, 1));
-        assertEquals(path.get(2), new GraphPoint(2, 1));
+        assertEquals(path.get(0), new GraphPoint(1, 1));
+        assertEquals(path.get(1), new GraphPoint(2, 0));
     }
 
     @Test
@@ -69,9 +68,9 @@ public class DijkstraPathFinderTest {
             {1, 1, 0, 0, 1},
             {1, 0, 1, 1, 1},
             {1, 1, 1, 0, 1}});
-        assertPathSizeEquals(12, g, 0, 0, 2, 0);
-        assertPathSizeEquals(7, g, 0, 0, 3, 2);
-        assertPathSizeEquals(9, g, 0, 0, 4, 3);
+        assertPathSizeEquals(8, g, 0, 0, 2, 0);
+        assertPathSizeEquals(5, g, 0, 0, 3, 2);
+        assertPathSizeEquals(6, g, 0, 0, 4, 3);
     }
 
     @Test
