@@ -143,8 +143,14 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     public void mouseMoved(MouseEvent e) {
     }
 
-    public void solve() {
+    public void findPath() {
         mSolutionPoints = mGraph.findPath(new DijkstraPathFinder(), mStartPoint, mEndPoint);
+        repaint();
+    }
+
+    public void clearWalls() {
+        mSolutionPoints = null;
+        mGraph.clearWalls();
         repaint();
     }
 

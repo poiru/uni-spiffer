@@ -116,6 +116,18 @@ public final class Graph {
     }
 
     /**
+     * Resets the nodes in the grid if needed.
+     */
+    public void clearWalls() {
+        reset();
+        for (int y = 0; y < mGrid.length; ++y) {
+            for (int x = 0; x < mGrid[y].length; ++x) {
+                mGrid[y][x].setWall(false);
+            }
+        }
+    }
+
+    /**
      * Resize the graph while keeping the Nodes within the new bounds intact.
      * 
      * @param width New width.
