@@ -10,6 +10,7 @@ package com.mohanathas.spiffer;
 
 import com.mohanathas.spiffer.ui.MainFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  * Entry point.
@@ -20,6 +21,11 @@ public class App {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception ex) {
+                }
+
                 final MainFrame mainFrame = new MainFrame();
             }
         });
