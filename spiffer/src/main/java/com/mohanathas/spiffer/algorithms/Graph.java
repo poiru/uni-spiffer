@@ -8,7 +8,6 @@
 
 package com.mohanathas.spiffer.algorithms;
 
-import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public class Graph {
         return null;
     }
 
-    Node getNode(Point point) {
+    Node getNode(GraphPoint point) {
         return getNode(point.getX(), point.getY());
     }
 
@@ -46,11 +45,11 @@ public class Graph {
      * @param endPos End position.
      * @return List of Points if a path was found or |null| otherwise.
      */
-    public List<Point> findPath(PathFinder finder, Point startPos, Point endPos) {
+    public List<GraphPoint> findPath(PathFinder finder, GraphPoint startPos, GraphPoint endPos) {
         // We need to clear e.g. the visited flag of the nodes.
         reset();
 
-        List<Point> path = finder.findPath(this, getNode(startPos), getNode(endPos));
+        List<GraphPoint> path = finder.findPath(this, getNode(startPos), getNode(endPos));
         return path;
     }
 

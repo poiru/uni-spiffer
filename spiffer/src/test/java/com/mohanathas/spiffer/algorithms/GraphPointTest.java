@@ -6,25 +6,25 @@
  * terms.
  */
 
-package com.mohanathas.spiffer.util;
+package com.mohanathas.spiffer.algorithms;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests the Point class.
+ * Tests the GraphPoint class.
  */
-public class PointTest {
-    public PointTest() {
+public class GraphPointTest {
+    public GraphPointTest() {
     }
 
     @Test
     public void testEquals() {
-        final Point point = new Point(1, 2);
-        assertTrue(new Point(1, 2).equals(new Point(1, 2)));
+        final GraphPoint point = new GraphPoint(1, 2);
+        assertTrue(new GraphPoint(1, 2).equals(new GraphPoint(1, 2)));
         assertTrue(point.equals(point));
-        assertFalse(point.equals(new Point(1, 0)));
-        assertFalse(point.equals(new Point(0, 2)));
+        assertFalse(point.equals(new GraphPoint(1, 0)));
+        assertFalse(point.equals(new GraphPoint(0, 2)));
         assertFalse(point.equals(new Integer(1)));
         assertFalse(point.equals(null));
     }

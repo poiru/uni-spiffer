@@ -8,7 +8,6 @@
 
 package com.mohanathas.spiffer.algorithms;
 
-import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -24,13 +23,13 @@ public class DijkstraPathFinder implements PathFinder {
      * using the Dijkstra's algorithm.
      */
     @Override
-    public List<Point> findPath(Graph graph, Node startNode, Node endNode) {
+    public List<GraphPoint> findPath(Graph graph, Node startNode, Node endNode) {
         final PriorityQueue<Node> heap = new PriorityQueue<>();
         heap.add(startNode);
 
         do {
             final Node node = heap.poll();
-            if (node.equals(endNode)){
+            if (node.equals(endNode)) {
                 return node.getParentPoints();
             }
 

@@ -8,7 +8,6 @@
 
 package com.mohanathas.spiffer.algorithms;
 
-import com.mohanathas.spiffer.util.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,15 +16,15 @@ import java.util.List;
  * Represents a node in a graph.
  */
 class Node implements Comparable<Node> {
-    private final Point mPoint;
+    private final GraphPoint mPoint;
     private boolean mWall = false;
 
     private int mWeight = 0;
     private Node mParent = null;
     private boolean mVisited = false;
-    
+
     public Node(int x, int y) {
-        mPoint = new Point(x, y);
+        mPoint = new GraphPoint(x, y);
     }
 
     public int getX() {
@@ -34,6 +33,10 @@ class Node implements Comparable<Node> {
 
     public int getY() {
         return mPoint.getY();
+    }
+
+    public GraphPoint getPoint() {
+        return mPoint;
     }
 
     public int getWeight() {
@@ -80,8 +83,8 @@ class Node implements Comparable<Node> {
     /**
      * @return A list of parents excluding the furthest parent in reverse order.
      */
-    public List<Point> getParentPoints() {
-        final List<Point> list = new ArrayList<>();
+    public List<GraphPoint> getParentPoints() {
+        final List<GraphPoint> list = new ArrayList<>();
         Node node = this;
         while (node != null) {
             list.add(node.mPoint);

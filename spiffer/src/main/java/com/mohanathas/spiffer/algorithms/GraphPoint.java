@@ -6,16 +6,16 @@
  * terms.
  */
 
-package com.mohanathas.spiffer.util;
+package com.mohanathas.spiffer.algorithms;
 
 /**
  * Represents a location in (x, y) coordinate space.
  */
-public class Point {
+public class GraphPoint {
     int mX;
     int mY;
 
-    public Point(int x, int y) {
+    public GraphPoint(int x, int y) {
         this.mX = x;
         this.mY = y;
     }
@@ -32,8 +32,8 @@ public class Point {
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj == this) return true;
-        if (!(obj instanceof Point)) return false;
-        Point other = (Point)obj;
+        if (!(obj instanceof GraphPoint)) return false;
+        GraphPoint other = (GraphPoint)obj;
         return mX == other.mX && mY == other.mY;
     }
 }

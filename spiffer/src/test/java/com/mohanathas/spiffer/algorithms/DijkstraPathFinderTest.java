@@ -8,7 +8,6 @@
 
 package com.mohanathas.spiffer.algorithms;
 
-import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -17,12 +16,11 @@ import static org.junit.Assert.*;
  *
  */
 public class DijkstraPathFinderTest {
-
     public DijkstraPathFinderTest() {
     }
 
     private void assertPathSizeEquals(int expected, Graph g, int x1, int y1, int x2, int y2) {
-        final List<Point> path = g.findPath(new DijkstraPathFinder(), new Point(x1, y1), new Point(x2, y2));
+        final List<GraphPoint> path = g.findPath(new DijkstraPathFinder(), new GraphPoint(x1, y1), new GraphPoint(x2, y2));
         if (expected == 0) {
             assertNull(path);
         } else {
@@ -58,10 +56,10 @@ public class DijkstraPathFinderTest {
         final Graph g = Graph.createFromIntArray(new int[][] {
             {1, 0, 1},
             {1, 1, 1}});
-        final List<Point> path = g.findPath(new DijkstraPathFinder(), new Point(0, 0), new Point(2, 0));
-        assertEquals(path.get(0), new Point(0, 1));
-        assertEquals(path.get(1), new Point(1, 1));
-        assertEquals(path.get(2), new Point(2, 1));
+        final List<GraphPoint> path = g.findPath(new DijkstraPathFinder(), new GraphPoint(0, 0), new GraphPoint(2, 0));
+        assertEquals(path.get(0), new GraphPoint(0, 1));
+        assertEquals(path.get(1), new GraphPoint(1, 1));
+        assertEquals(path.get(2), new GraphPoint(2, 1));
     }
 
     @Test
