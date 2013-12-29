@@ -27,9 +27,46 @@ public class GraphTest {
     }
 
     @Test
+    public void testDeserialize() {
+        final Graph g = new Graph(3, 2);
+        g.deserialize("#..\n.#.\n");
+        assertTrue(g.isWall(new GraphPoint(0, 0)));
+        assertTrue(g.isWall(new GraphPoint(0, 0)));
+        assertTrue(g.isWall(new GraphPoint(1, 1)));
+    }
+
+    @Test
+    public void testSize() {
+        final Graph g = new Graph(0, 0);
+        assertEquals(0, g.getWidth());
+        assertEquals(0, g.getHeight());
+        g.resize(5, 7);
+        assertEquals(5, g.getWidth());
+        assertEquals(7, g.getHeight());
+    }
+
+    @Test
+    public void testSetWall() {
+        final Graph g = new Graph(2, 2);
+        final GraphPoint point = new GraphPoint(1, 1);
+        assertFalse(g.isWall(point));
+        g.setWall(point, true);
+        assertTrue(g.isWall(point));
+    }
+
+    @Test
+    public void testClearWalls() {
+        final Graph g = Graph.createFromIntArray(new int[][] {
+            {0, 0},
+            {0, 0}});
+        g.clearWalls();
+        assertFalse(g.isWall(new GraphPoint(0, 0)));
+        assertFalse(g.isWall(new GraphPoint(1, 1)));
+    }
+
+    @Test
     public void testGetNodeWithinBounds() {
-        Graph g = new Graph(4, 2);
-        g.reset();
+        final Graph g = new Graph(4, 2);
         assertNotNull(g.getNode(0, 0));
         assertNotNull(g.getNode(1, 0));
         assertNotNull(g.getNode(0, 1));
@@ -38,8 +75,7 @@ public class GraphTest {
 
     @Test
     public void testGetNodeOutOfBounds() {
-        Graph g = new Graph(1, 1);
-        g.reset();
+        final Graph g = new Graph(1, 1);
         assertNull(g.getNode(-1, 0));
         assertNull(g.getNode(0, -1));
         assertNull(g.getNode(1, 0));

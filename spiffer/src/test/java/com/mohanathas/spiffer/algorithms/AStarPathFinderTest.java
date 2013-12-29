@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
 /**
  *
  */
-public class DijkstraPathFinderTest {
-    public DijkstraPathFinderTest() {
+public class AStarPathFinderTest {
+    public AStarPathFinderTest() {
     }
 
     private void assertPathSizeEquals(int expected, Graph g, int x1, int y1, int x2, int y2) {
@@ -27,6 +27,18 @@ public class DijkstraPathFinderTest {
             assertNotNull(path);
             assertEquals(expected, path.size());
         }
+    }
+
+    private void assertVisitedCountEquals(int expected, Graph g) {
+        int visited = 0;
+        for (int y = 0; y < g.getWidth(); ++y) {
+            for (int x = 0; x < g.getWidth(); ++x) {
+                if (g.isVisited(new GraphPoint(x, y))) {
+                    ++visited;
+                }
+            }
+        }
+        assertEquals(expected, visited);
     }
 
     @Test
@@ -52,13 +64,26 @@ public class DijkstraPathFinderTest {
     }
 
     @Test
-    public void testPath() {
+    public void testDiagonalPath() {
         final Graph g = Graph.createFromIntArray(new int[][] {
             {1, 0, 1},
             {1, 1, 1}});
         final List<GraphPoint> path = g.findPath(new DijkstraPathFinder(), new GraphPoint(0, 0), new GraphPoint(2, 0));
         assertEquals(path.get(0), new GraphPoint(1, 1));
         assertEquals(path.get(1), new GraphPoint(2, 0));
+    }
+
+    @Test
+    public void testVisitedPath() {
+        final Graph g = new Graph(5, 5);
+        final GraphPoint start = new GraphPoint(0, 0);
+        final GraphPoint end = new GraphPoint(4, 4);
+
+        assertNotNull(g.findPath(new DijkstraPathFinder(), start, end));
+        assertVisitedCountEquals(24, g);
+
+        assertNotNull(g.findPath(new AStarPathFinder(Heuristic.Manhattan), start, end));
+        assertVisitedCountEquals(4, g);
     }
 
     @Test

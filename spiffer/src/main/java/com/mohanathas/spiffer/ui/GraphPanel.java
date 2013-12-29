@@ -8,9 +8,9 @@
 
 package com.mohanathas.spiffer.ui;
 
-import com.mohanathas.spiffer.algorithms.DijkstraPathFinder;
 import com.mohanathas.spiffer.algorithms.Graph;
 import com.mohanathas.spiffer.algorithms.GraphPoint;
+import com.mohanathas.spiffer.algorithms.PathFinder;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -143,8 +143,8 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     public void mouseMoved(MouseEvent e) {
     }
 
-    public void findPath() {
-        mSolutionPoints = mGraph.findPath(new DijkstraPathFinder(), mStartPoint, mEndPoint);
+    public void findPath(PathFinder pathFinder) {
+        mSolutionPoints = mGraph.findPath(pathFinder, mStartPoint, mEndPoint);
         repaint();
     }
 

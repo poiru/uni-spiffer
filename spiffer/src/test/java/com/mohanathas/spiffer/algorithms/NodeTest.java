@@ -23,7 +23,8 @@ public class NodeTest {
         final Node node = new Node(1, 2);
         assertEquals(1, node.getX());
         assertEquals(2, node.getY());
-        assertEquals(Double.MAX_VALUE, node.getDistance(), 0.001);
+        assertEquals(new GraphPoint(1, 2), node.getPoint());
+        assertEquals(Double.MAX_VALUE, node.getStartDistance(), 0.001);
     }
 
     @Test

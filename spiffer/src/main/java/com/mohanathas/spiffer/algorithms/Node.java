@@ -19,7 +19,12 @@ class Node implements Comparable<Node> {
     private final GraphPoint mPoint;
     private boolean mWall = false;
 
-    private double mDistance = Double.MAX_VALUE;
+    /**
+     * Distance to the start and end nodes from the current node.
+     */
+    private double mStartDistance = Double.MAX_VALUE;
+    private double mGoalDistance = 0.0;
+
     private Node mParent = null;
     private boolean mVisited = false;
 
@@ -39,12 +44,20 @@ class Node implements Comparable<Node> {
         return mPoint;
     }
 
-    public double getDistance() {
-        return mDistance;
+    public double getStartDistance() {
+        return mStartDistance;
     }
 
-    public void setDistance(double distance) {
-        mDistance = distance;
+    public void setStartDistance(double distance) {
+        mStartDistance = distance;
+    }
+
+    public double getGoalDistance() {
+        return mGoalDistance;
+    }
+
+    public void setGoalDistance(double distance) {
+        mGoalDistance = distance;
     }
 
     public Node getParent() {
@@ -75,7 +88,8 @@ class Node implements Comparable<Node> {
      * Resets this fields of this instance to their initial state.
      */
     public void reset() {
-        mDistance = Double.MAX_VALUE;
+        mStartDistance = Double.MAX_VALUE;
+        mGoalDistance = 0.0;
         mVisited = false;
         mParent = null;
     }
@@ -105,6 +119,7 @@ class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node that) {
-        return Double.compare(mDistance, that.mDistance);
+        return Double.compare(
+            mStartDistance + mGoalDistance, that.mStartDistance + that.mGoalDistance);
     }
 }

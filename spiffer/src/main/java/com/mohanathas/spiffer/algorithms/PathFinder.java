@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Abstracts the path finding algorithm used by the Graph class.
  */
-abstract interface PathFinder {
+public abstract interface PathFinder {
     /**
      * Finds a list of Points connecting the Nodes at |startPos| and |endPos|.
      *
