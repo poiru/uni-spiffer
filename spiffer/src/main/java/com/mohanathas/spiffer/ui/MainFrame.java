@@ -43,7 +43,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         super("Spiffer");
-        super.setIconImage(new ImageIcon(ClassLoader.getSystemResource("app.png")).getImage());
+        super.setIconImage(new ImageIcon(MainFrame.class.getResource("icon.png")).getImage());
         super.setPreferredSize(new Dimension(600, 500));
         super.setMinimumSize(new Dimension(600, 300));
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
