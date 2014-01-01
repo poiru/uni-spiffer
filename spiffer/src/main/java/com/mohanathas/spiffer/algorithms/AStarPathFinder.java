@@ -8,8 +8,8 @@
 
 package com.mohanathas.spiffer.algorithms;
 
+import com.mohanathas.spiffer.util.BinaryMinHeap;
 import java.util.List;
-import java.util.PriorityQueue;
 
 /**
  * PathFinder implementation of the A* algorithm.
@@ -26,12 +26,12 @@ public class AStarPathFinder implements PathFinder {
      */
     @Override
     public List<GraphPoint> findPath(Graph graph, Node startNode, Node endNode) {
-        final PriorityQueue<Node> heap = new PriorityQueue<>();
+        final BinaryMinHeap<Node> heap = new BinaryMinHeap<>();
         heap.add(startNode);
         startNode.setStartDistance(0.0);
 
         do {
-            final Node node = heap.poll();
+            final Node node = heap.pop();
             if (node.equals(endNode)) {
                 return node.getParentPoints();
             }
