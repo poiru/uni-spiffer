@@ -8,6 +8,7 @@
 
 package com.mohanathas.spiffer.algorithms;
 
+import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -20,7 +21,7 @@ public class AStarPathFinderTest {
     }
 
     private void assertPathSizeEquals(int expected, Graph g, int x1, int y1, int x2, int y2) {
-        final List<GraphPoint> path = g.findPath(new DijkstraPathFinder(), new GraphPoint(x1, y1), new GraphPoint(x2, y2));
+        final List<Point> path = g.findPath(new DijkstraPathFinder(), new Point(x1, y1), new Point(x2, y2));
         if (expected == 0) {
             assertNull(path);
         } else {
@@ -33,7 +34,7 @@ public class AStarPathFinderTest {
         int visited = 0;
         for (int y = 0; y < g.getWidth(); ++y) {
             for (int x = 0; x < g.getWidth(); ++x) {
-                if (g.isVisited(new GraphPoint(x, y))) {
+                if (g.isVisited(new Point(x, y))) {
                     ++visited;
                 }
             }
@@ -68,16 +69,16 @@ public class AStarPathFinderTest {
         final Graph g = Graph.createFromIntArray(new int[][] {
             {1, 0, 1},
             {1, 1, 1}});
-        final List<GraphPoint> path = g.findPath(new DijkstraPathFinder(), new GraphPoint(0, 0), new GraphPoint(2, 0));
-        assertEquals(path.get(0), new GraphPoint(1, 1));
-        assertEquals(path.get(1), new GraphPoint(2, 0));
+        final List<Point> path = g.findPath(new DijkstraPathFinder(), new Point(0, 0), new Point(2, 0));
+        assertEquals(path.get(0), new Point(1, 1));
+        assertEquals(path.get(1), new Point(2, 0));
     }
 
     @Test
     public void testVisitedPath() {
         final Graph g = new Graph(5, 5);
-        final GraphPoint start = new GraphPoint(0, 0);
-        final GraphPoint end = new GraphPoint(4, 4);
+        final Point start = new Point(0, 0);
+        final Point end = new Point(4, 4);
 
         assertNotNull(g.findPath(new DijkstraPathFinder(), start, end));
         assertVisitedCountEquals(24, g);

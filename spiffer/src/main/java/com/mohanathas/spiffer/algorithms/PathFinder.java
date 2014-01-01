@@ -8,6 +8,7 @@
 
 package com.mohanathas.spiffer.algorithms;
 
+import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 
 /**
@@ -22,5 +23,5 @@ public abstract interface PathFinder {
      * @param endNode Node that is to be reached from |startNode|.
      * @return List of Points if a path was found or |null| otherwise.
      */
-    List<GraphPoint> findPath(Graph graph, Node startNode, Node endNode);
+    List<Point> findPath(Graph graph, Node startNode, Node endNode);
 }

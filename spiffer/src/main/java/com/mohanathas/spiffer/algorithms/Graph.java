@@ -8,6 +8,7 @@
 
 package com.mohanathas.spiffer.algorithms;
 
+import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public final class Graph {
         return null;
     }
 
-    Node getNode(GraphPoint point) {
+    Node getNode(Point point) {
         return getNode(point.getX(), point.getY());
     }
 
@@ -52,7 +53,7 @@ public final class Graph {
      * @param point Point to check.
      * @return True if the point has been visited.
      */
-    public boolean isVisited(GraphPoint point) {
+    public boolean isVisited(Point point) {
         final Node node = getNode(point);
         return node != null ? node.isVisited() : false;
     }
@@ -63,7 +64,7 @@ public final class Graph {
      * @param point Point to check.
      * @return True if the point is a wall.
      */
-    public boolean isWall(GraphPoint point) {
+    public boolean isWall(Point point) {
         final Node node = getNode(point);
         return node != null ? node.isWall() : false;
     }
@@ -74,7 +75,7 @@ public final class Graph {
      * @param point Point to set.
      * @param wall New wall state of the point.
      */
-    public void setWall(GraphPoint point, boolean wall) {
+    public void setWall(Point point, boolean wall) {
         final Node node = getNode(point);
         if (node != null) {
             node.setWall(wall);
@@ -89,13 +90,13 @@ public final class Graph {
      * @param endPos End position.
      * @return List of Points if a path was found or |null| otherwise.
      */
-    public List<GraphPoint> findPath(PathFinder finder, GraphPoint startPos, GraphPoint endPos) {
+    public List<Point> findPath(PathFinder finder, Point startPos, Point endPos) {
         if (mDirty) {
             // We need to clear e.g. the visited flag of the nodes.
             reset();
         }
 
-        final List<GraphPoint> path = finder.findPath(this, getNode(startPos), getNode(endPos));
+        final List<Point> path = finder.findPath(this, getNode(startPos), getNode(endPos));
         mDirty = true;
         return path;
     }

@@ -9,6 +9,7 @@
 package com.mohanathas.spiffer.algorithms;
 
 import com.mohanathas.spiffer.util.BinaryMinHeap;
+import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class AStarPathFinder implements PathFinder {
      * Finds a list of Points connecting |startNode| and |endNode|.
      */
     @Override
-    public List<GraphPoint> findPath(Graph graph, Node startNode, Node endNode) {
+    public List<Point> findPath(Graph graph, Node startNode, Node endNode) {
         final BinaryMinHeap<Node> heap = new BinaryMinHeap<>();
         heap.add(startNode);
         startNode.setStartDistance(0.0);

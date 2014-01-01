@@ -8,6 +8,7 @@
 
 package com.mohanathas.spiffer.algorithms;
 
+import com.mohanathas.spiffer.util.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -30,9 +31,9 @@ public class GraphTest {
     public void testDeserialize() {
         final Graph g = new Graph(3, 2);
         g.deserialize("#..\n.#.\n");
-        assertTrue(g.isWall(new GraphPoint(0, 0)));
-        assertTrue(g.isWall(new GraphPoint(0, 0)));
-        assertTrue(g.isWall(new GraphPoint(1, 1)));
+        assertTrue(g.isWall(new Point(0, 0)));
+        assertTrue(g.isWall(new Point(0, 0)));
+        assertTrue(g.isWall(new Point(1, 1)));
     }
 
     @Test
@@ -48,7 +49,7 @@ public class GraphTest {
     @Test
     public void testSetWall() {
         final Graph g = new Graph(2, 2);
-        final GraphPoint point = new GraphPoint(1, 1);
+        final Point point = new Point(1, 1);
         assertFalse(g.isWall(point));
         g.setWall(point, true);
         assertTrue(g.isWall(point));
@@ -60,8 +61,8 @@ public class GraphTest {
             {0, 0},
             {0, 0}});
         g.clearWalls();
-        assertFalse(g.isWall(new GraphPoint(0, 0)));
-        assertFalse(g.isWall(new GraphPoint(1, 1)));
+        assertFalse(g.isWall(new Point(0, 0)));
+        assertFalse(g.isWall(new Point(1, 1)));
     }
 
     @Test

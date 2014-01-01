@@ -8,6 +8,7 @@
 
 package com.mohanathas.spiffer.algorithms;
 
+import com.mohanathas.spiffer.util.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -23,7 +24,7 @@ public class NodeTest {
         final Node node = new Node(1, 2);
         assertEquals(1, node.getX());
         assertEquals(2, node.getY());
-        assertEquals(new GraphPoint(1, 2), node.getPoint());
+        assertEquals(new Point(1, 2), node.getPoint());
         assertEquals(Double.MAX_VALUE, node.getStartDistance(), 0.001);
     }
 

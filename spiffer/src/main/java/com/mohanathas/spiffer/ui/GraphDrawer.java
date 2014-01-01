@@ -9,7 +9,7 @@
 package com.mohanathas.spiffer.ui;
 
 import com.mohanathas.spiffer.algorithms.Graph;
-import com.mohanathas.spiffer.algorithms.GraphPoint;
+import com.mohanathas.spiffer.util.Point;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -39,7 +39,7 @@ class GraphDrawer {
         g.setColor(WALL_COLOR);
         for (int y = 0; y < graph.getHeight(); ++y) {
             for (int x = 0; x < graph.getWidth(); ++x) {
-                if (graph.isWall(new GraphPoint(x, y))) {
+                if (graph.isWall(new Point(x, y))) {
                     fillBox(g, x, y);
                 }
             }
@@ -50,19 +50,19 @@ class GraphDrawer {
         g.setColor(VISITED_COLOR);
         for (int y = 0; y < graph.getHeight(); ++y) {
             for (int x = 0; x < graph.getWidth(); ++x) {
-                if (graph.isVisited(new GraphPoint(x, y))) {
+                if (graph.isVisited(new Point(x, y))) {
                     fillBox(g, x, y);
                 }
             }
         }
     }
 
-    public static void drawStartPoint(Graphics g, GraphPoint point) {
+    public static void drawStartPoint(Graphics g, Point point) {
         g.setColor(START_COLOR);
         fillBox(g, point.getX(), point.getY());
     }
 
-    public static void drawEndPoint(Graphics g, GraphPoint point) {
+    public static void drawEndPoint(Graphics g, Point point) {
         g.setColor(END_COLOR);
         fillBox(g, point.getX(), point.getY());
     }
@@ -82,12 +82,12 @@ class GraphDrawer {
         }
     }
 
-    public static void drawSolutionLine(Graphics g, GraphPoint startPoint, List<GraphPoint> solutionPoints) {
+    public static void drawSolutionLine(Graphics g, Point startPoint, List<Point> solutionPoints) {
         g.setColor(SOLUTION_COLOR);
         Graphics2D g2d = (Graphics2D)g;
         g2d.setStroke(new BasicStroke(4));
-        GraphPoint prevPoint = startPoint;
-        for (GraphPoint point : solutionPoints) {
+        Point prevPoint = startPoint;
+        for (Point point : solutionPoints) {
             g.drawLine(
                     prevPoint.getX() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2),
                     prevPoint.getY() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2),

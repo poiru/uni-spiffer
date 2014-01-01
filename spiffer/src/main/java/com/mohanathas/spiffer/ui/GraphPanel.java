@@ -9,11 +9,10 @@
 package com.mohanathas.spiffer.ui;
 
 import com.mohanathas.spiffer.algorithms.Graph;
-import com.mohanathas.spiffer.algorithms.GraphPoint;
 import com.mohanathas.spiffer.algorithms.PathFinder;
+import com.mohanathas.spiffer.util.Point;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
@@ -27,9 +26,9 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     static final int BOX_SIZE = 20;
 
     final Graph mGraph = new Graph(0, 0);
-    private GraphPoint mStartPoint = new GraphPoint(0, 0);
-    private GraphPoint mEndPoint = new GraphPoint(5, 5);
-    private List<GraphPoint> mSolutionPoints = null;
+    private Point mStartPoint = new Point(0, 0);
+    private Point mEndPoint = new Point(5, 5);
+    private List<Point> mSolutionPoints = null;
 
     private static enum DragItem {
         NONE, WALL, UNWALL, START, END
@@ -69,18 +68,18 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
 
     @Override
     public void mousePressed(MouseEvent e) {
-        final GraphPoint graphPoint = pointToGraphPoint(e.getPoint());
+        final Point point = panelPointToGraphPoint(e.getPoint());
 
         // Get rid of the solution line and the visited boxes.
         mSolutionPoints = null;
         mGraph.reset();
 
-        if (mStartPoint.equals(graphPoint)) {
+        if (mStartPoint.equals(point)) {
             mDragItem = DragItem.START;
-        } else if (mEndPoint.equals(graphPoint)) {
+        } else if (mEndPoint.equals(point)) {
             mDragItem = DragItem.END;
         } else {
-            if (mGraph.isWall(graphPoint)) {
+            if (mGraph.isWall(point)) {
                 mDragItem = DragItem.UNWALL;
             } else {
                 mDragItem = DragItem.WALL;
@@ -106,32 +105,32 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        final GraphPoint graphPoint = pointToGraphPoint(e.getPoint());
-        if (graphPoint.getX() < 0 || graphPoint.getX() >= mGraph.getWidth() ||
-            graphPoint.getY() < 0 || graphPoint.getY() >= mGraph.getHeight()) {
+        final Point point = panelPointToGraphPoint(e.getPoint());
+        if (point.getX() < 0 || point.getX() >= mGraph.getWidth() ||
+            point.getY() < 0 || point.getY() >= mGraph.getHeight()) {
             return;
         }
 
         switch (mDragItem) {
             case WALL:
-                if (!mStartPoint.equals(graphPoint) && !mEndPoint.equals(graphPoint)) {
-                    mGraph.setWall(graphPoint, true);
+                if (!mStartPoint.equals(point) && !mEndPoint.equals(point)) {
+                    mGraph.setWall(point, true);
                 }
                 break;
 
             case UNWALL:
-                mGraph.setWall(graphPoint, false);
+                mGraph.setWall(point, false);
                 break;
 
             case START:
-                if (!mGraph.isWall(graphPoint) && !mEndPoint.equals(graphPoint)) {
-                    mStartPoint = graphPoint;
+                if (!mGraph.isWall(point) && !mEndPoint.equals(point)) {
+                    mStartPoint = point;
                 }
                 break;
 
             case END:
-                if (!mGraph.isWall(graphPoint) && !mStartPoint.equals(graphPoint)) {
-                    mEndPoint = graphPoint;
+                if (!mGraph.isWall(point) && !mStartPoint.equals(point)) {
+                    mEndPoint = point;
                 }
                 break;
         }
@@ -154,7 +153,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
         repaint();
     }
 
-    private GraphPoint pointToGraphPoint(Point point) {
-        return new GraphPoint((int)point.getX() / BOX_SIZE, (int)point.getY() / BOX_SIZE);
+    private Point panelPointToGraphPoint(java.awt.Point point) {
+        return new Point((int)point.getX() / BOX_SIZE, (int)point.getY() / BOX_SIZE);
     }
 }
