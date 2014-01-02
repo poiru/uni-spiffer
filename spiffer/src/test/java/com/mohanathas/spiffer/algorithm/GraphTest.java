@@ -32,18 +32,29 @@ public class GraphTest {
         final Graph g = new Graph(3, 2);
         g.deserialize("#..\n.#.\n");
         assertTrue(g.isWall(new Point(0, 0)));
-        assertTrue(g.isWall(new Point(0, 0)));
+        assertTrue(!g.isWall(new Point(1, 0)));
         assertTrue(g.isWall(new Point(1, 1)));
     }
 
     @Test
-    public void testSize() {
+    public void testMalformedDeserialize() {
+        final Graph g = new Graph(2, 2);
+        g.deserialize("#.\n.####\n####\n");
+        assertTrue(!g.isWall(new Point(2, 2)));
+    }
+
+    @Test
+    public void testResize() {
         final Graph g = new Graph(0, 0);
         assertEquals(0, g.getWidth());
         assertEquals(0, g.getHeight());
         g.resize(5, 7);
         assertEquals(5, g.getWidth());
         assertEquals(7, g.getHeight());
+        g.resize(5, 8);
+        assertNotNull(g.getNode(4, 7));
+        g.resize(6, 8);
+        assertNotNull(g.getNode(5, 7));
     }
 
     @Test
@@ -81,6 +92,10 @@ public class GraphTest {
         assertNull(g.getNode(0, -1));
         assertNull(g.getNode(1, 0));
         assertNull(g.getNode(0, 1));
+
+        g.setWall(new Point(1, 1), true);
+        assertFalse(g.isWall(new Point(1, 1)));
+        assertFalse(g.isVisited(new Point(1, 1)));
     }
 
     @Test

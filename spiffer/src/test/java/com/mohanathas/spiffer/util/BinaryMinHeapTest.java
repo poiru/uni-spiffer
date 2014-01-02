@@ -34,17 +34,26 @@ public class BinaryMinHeapTest {
 
     @Test
     public void testPopOrder() {
-        mHeap.add(2);
-        assertEquals(new Integer(2), mHeap.peek());
         mHeap.add(3);
-        assertEquals(new Integer(2), mHeap.peek());
-        mHeap.add(0);
-        assertEquals(new Integer(0), mHeap.peek());
+        mHeap.add(8);
+        mHeap.add(2);
+        mHeap.add(6);
+        mHeap.add(4);
+        mHeap.add(5);
         mHeap.add(1);
-
+        mHeap.add(9);
+        mHeap.add(7);
+        mHeap.add(0);
         assertEquals(new Integer(0), mHeap.pop());
         assertEquals(new Integer(1), mHeap.pop());
         assertEquals(new Integer(2), mHeap.pop());
         assertEquals(new Integer(3), mHeap.pop());
+    }
+
+    @Test
+    public void testToString() {
+        mHeap.add(1);
+        mHeap.add(2);
+        assertTrue(mHeap.toString().startsWith("[1, 2"));
     }
 }

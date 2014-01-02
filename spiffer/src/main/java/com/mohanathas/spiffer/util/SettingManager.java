@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Serializable key-value store. Values are stored internally as strings, but
  * helper methods are provided for integers as well.
- * 
+ *
  * The serialized form resembles:
  *   key1=value1
  *   key2=value2
@@ -49,11 +49,11 @@ public class SettingManager {
 
     /**
      * Gets the value of a setting as a string.
-     * 
+     *
      * @return String value corrosponding to |key|. If |key| does not exist,
      * returns |defaultValue| instead.
      */
-    String getSetting(String key, String defaultValue) {
+    public String getSetting(String key, String defaultValue) {
         final String value = mSettingMap.get(key.toLowerCase());
         return (value == null) ? defaultValue : value;
     }
@@ -64,16 +64,16 @@ public class SettingManager {
      * @return String value corrosponding to |key|. If |key| does not exist,
      * returns |defaultValue| instead.
      */
-    int getSetting(String key, int defaultValue) {
+    public int getSetting(String key, int defaultValue) {
         final String value = mSettingMap.get(key.toLowerCase());
         return (value == null) ? defaultValue : Integer.parseInt(value);
     }
 
-    void setSetting(String key, String value) {
+    public void setSetting(String key, String value) {
         mSettingMap.put(key.toLowerCase(), value);
     }
 
-    void setSetting(String key, int value) {
+    public void setSetting(String key, int value) {
         mSettingMap.put(key.toLowerCase(), Integer.toString(value));
     }
 }

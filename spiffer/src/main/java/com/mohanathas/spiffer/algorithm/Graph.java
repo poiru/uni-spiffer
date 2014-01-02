@@ -135,10 +135,9 @@ public final class Graph {
     }
 
     /**
-     * Resets the nodes in the grid if needed.
+     * Marks all nodes as normal nodes.
      */
     public void clearWalls() {
-        reset();
         for (int y = 0; y < mGrid.length; ++y) {
             for (int x = 0; x < mGrid[y].length; ++x) {
                 mGrid[y][x].setWall(false);
@@ -148,13 +147,13 @@ public final class Graph {
 
     /**
      * Resize the graph while keeping the Nodes within the new bounds intact.
-     * 
+     *
      * @param width New width.
      * @param height New height.
      */
     public void resize(int width, int height) {
-        if (width == mGrid.length && height == mGrid[0].length) return;
-        
+        if (width == getWidth() && height == getHeight()) return;
+
         Node[][] newGrid = new Node[height][width];
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
@@ -201,7 +200,7 @@ public final class Graph {
     /**
      * Helper method to create a Graph from a two dimensional array of ints. A
      * integer value of 0 is treated as a wall and all others as a normal node.
-     * 
+     *
      * @param ints Two dimensional int array representing the nodes.
      * @return A Graph based on the |ints| array.
      */
