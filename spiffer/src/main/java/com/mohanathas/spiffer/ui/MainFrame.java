@@ -8,10 +8,10 @@
 
 package com.mohanathas.spiffer.ui;
 
-import com.mohanathas.spiffer.algorithms.AStarPathFinder;
-import com.mohanathas.spiffer.algorithms.DijkstraPathFinder;
-import com.mohanathas.spiffer.algorithms.Heuristic;
-import com.mohanathas.spiffer.algorithms.PathFinder;
+import com.mohanathas.spiffer.algorithm.AStarPathFinder;
+import com.mohanathas.spiffer.algorithm.DijkstraPathFinder;
+import com.mohanathas.spiffer.algorithm.Heuristic;
+import com.mohanathas.spiffer.algorithm.PathFinder;
 import com.mohanathas.spiffer.util.SettingManager;
 import java.awt.BorderLayout;
 import java.awt.Container;

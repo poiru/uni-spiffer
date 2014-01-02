@@ -8,7 +8,7 @@
 
 package com.mohanathas.spiffer.ui;
 
-import com.mohanathas.spiffer.algorithms.Graph;
+import com.mohanathas.spiffer.algorithm.Graph;
 import com.mohanathas.spiffer.util.Point;
 import java.awt.BasicStroke;
 import java.awt.Color;

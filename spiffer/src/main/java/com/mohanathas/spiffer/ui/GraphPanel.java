@@ -8,8 +8,8 @@
 
 package com.mohanathas.spiffer.ui;
 
-import com.mohanathas.spiffer.algorithms.Graph;
-import com.mohanathas.spiffer.algorithms.PathFinder;
+import com.mohanathas.spiffer.algorithm.Graph;
+import com.mohanathas.spiffer.algorithm.PathFinder;
 import com.mohanathas.spiffer.util.Point;
 import java.awt.Color;
 import java.awt.Graphics;

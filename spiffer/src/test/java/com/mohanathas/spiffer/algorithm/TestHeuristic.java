@@ -6,7 +6,7 @@
  * terms.
  */
 
-package com.mohanathas.spiffer.algorithms;
+package com.mohanathas.spiffer.algorithm;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

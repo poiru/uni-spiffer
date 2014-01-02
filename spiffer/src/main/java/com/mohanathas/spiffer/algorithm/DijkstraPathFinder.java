@@ -6,7 +6,7 @@
  * terms.
  */
 
-package com.mohanathas.spiffer.algorithms;
+package com.mohanathas.spiffer.algorithm;
 
 /**
  * PathFinder implementation of Dijkstra's algorithm. This simply uses the A* algorithm

@@ -6,7 +6,7 @@
  * terms.
  */
 
-package com.mohanathas.spiffer.algorithms;
+package com.mohanathas.spiffer.algorithm;
 
 /**
  * Implements various heuristic distance functions.

@@ -6,7 +6,7 @@
  * terms.
  */
 
-package com.mohanathas.spiffer.algorithms;
+package com.mohanathas.spiffer.algorithm;
 
 import com.mohanathas.spiffer.util.Point;
 import org.junit.Test;

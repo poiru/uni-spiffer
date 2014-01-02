@@ -25,7 +25,7 @@
         <configuration>
           <instrumentation>
             <includes>
-              <include>com/mohanathas/spiffer/algorithms/*.class</include>
+              <include>com/mohanathas/spiffer/algorithm/*.class</include>
               <include>com/mohanathas/spiffer/util/*.class</include>
             </includes>
           </instrumentation>
@@ -37,11 +37,11 @@
         <artifactId>pitest-maven</artifactId>
         <configuration>
           <targetClasses>
-            <param>com.mohanathas.spiffer.algorithms.*</param>
+            <param>com.mohanathas.spiffer.algorithm.*</param>
             <param>com.mohanathas.spiffer.util.*</param>
           </targetClasses>
           <targetTests>
-            <param>com.mohanathas.spiffer.algorithms.*</param>
+            <param>com.mohanathas.spiffer.algorithm.*</param>
             <param>com.mohanathas.spiffer.util.*</param>
           </targetTests>
         </configuration>
