@@ -108,8 +108,8 @@ public final class Graph {
      * @param points List of points to take from startPoint in order to reach goal.
      * @return Total distance of path.
      */
-    public static double calculatePathLength(Point startPoint, List<Point> points) {
-        double length = 0.0;
+    public static float calculatePathLength(Point startPoint, List<Point> points) {
+        float length = 0.0f;
         Point prevPoint = startPoint;
         for (Point point : points) {
             length += point.distanceTo(prevPoint);

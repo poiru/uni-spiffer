@@ -82,7 +82,7 @@ public class MainFrame extends JFrame {
                     case "A*":       pathFinder = new AStarPathFinder(heuristic); break;
                 }
 
-                final double length = mGraphPanel.findPath(pathFinder);
+                final float length = mGraphPanel.findPath(pathFinder);
                 mLengthLabel.setText(new DecimalFormat("0.##").format(length));
             }
         });

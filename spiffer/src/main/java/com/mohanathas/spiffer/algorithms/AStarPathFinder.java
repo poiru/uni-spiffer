@@ -29,7 +29,7 @@ public class AStarPathFinder implements PathFinder {
     public List<Point> findPath(Graph graph, Node startNode, Node endNode) {
         final BinaryMinHeap<Node> heap = new BinaryMinHeap<>();
         heap.add(startNode);
-        startNode.setStartDistance(0.0);
+        startNode.setStartDistance(0.0f);
 
         do {
             final Node node = heap.pop();
@@ -61,7 +61,7 @@ public class AStarPathFinder implements PathFinder {
                         continue;
                     }
 
-                    final double distance = diagonal ? Math.sqrt(2.0) : 1.0;
+                    final float distance = diagonal ? (float)Math.sqrt(2.0) : 1.0f;
                     if (neighborNode.getStartDistance() > node.getStartDistance() + distance) {
                         neighborNode.setParent(node);
                         neighborNode.setStartDistance(node.getStartDistance() + distance);

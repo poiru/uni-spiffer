@@ -25,7 +25,7 @@ public class NodeTest {
         assertEquals(1, node.getX());
         assertEquals(2, node.getY());
         assertEquals(new Point(1, 2), node.getPoint());
-        assertEquals(Double.MAX_VALUE, node.getStartDistance(), 0.001);
+        assertEquals(Float.MAX_VALUE, node.getStartDistance(), 0.001f);
     }
 
     @Test

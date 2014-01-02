@@ -23,8 +23,8 @@ class Node implements Comparable<Node> {
     /**
      * Distance to the start and end nodes from the current node.
      */
-    private double mStartDistance = Double.MAX_VALUE;
-    private double mGoalDistance = 0.0;
+    private float mStartDistance = Float.MAX_VALUE;
+    private float mGoalDistance = 0.0f;
 
     private Node mParent = null;
     private boolean mVisited = false;
@@ -45,19 +45,19 @@ class Node implements Comparable<Node> {
         return mPoint;
     }
 
-    public double getStartDistance() {
+    public float getStartDistance() {
         return mStartDistance;
     }
 
-    public void setStartDistance(double distance) {
+    public void setStartDistance(float distance) {
         mStartDistance = distance;
     }
 
-    public double getGoalDistance() {
+    public float getGoalDistance() {
         return mGoalDistance;
     }
 
-    public void setGoalDistance(double distance) {
+    public void setGoalDistance(float distance) {
         mGoalDistance = distance;
     }
 
@@ -89,8 +89,8 @@ class Node implements Comparable<Node> {
      * Resets this fields of this instance to their initial state.
      */
     public void reset() {
-        mStartDistance = Double.MAX_VALUE;
-        mGoalDistance = 0.0;
+        mStartDistance = Float.MAX_VALUE;
+        mGoalDistance = 0.0f;
         mVisited = false;
         mParent = null;
     }

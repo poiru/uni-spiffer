@@ -20,14 +20,14 @@ public class AStarPathFinderTest {
     public AStarPathFinderTest() {
     }
 
-    private void assertPathLengthEquals(double expected, Graph g, int x1, int y1, int x2, int y2) {
+    private void assertPathLengthEquals(float expected, Graph g, int x1, int y1, int x2, int y2) {
         final Point start = new Point(x1, y1);
         final List<Point> path = g.findPath(new DijkstraPathFinder(), start, new Point(x2, y2));
-        if (expected == 0) {
+        if (expected == 0.0f) {
             assertNull(path);
         } else {
             assertNotNull(path);
-            assertEquals(expected, Graph.calculatePathLength(start, path), 0.01);
+            assertEquals(expected, Graph.calculatePathLength(start, path), 0.01f);
         }
     }
 
@@ -49,10 +49,10 @@ public class AStarPathFinderTest {
             {1, 1, 1},
             {1, 1, 1},
             {1, 1, 1}});
-        assertPathLengthEquals(1, g, 1, 1, 0, 1);
-        assertPathLengthEquals(1, g, 1, 1, 1, 0);
-        assertPathLengthEquals(1, g, 1, 1, 2, 1);
-        assertPathLengthEquals(1, g, 1, 1, 1, 2);
+        assertPathLengthEquals(1.0f, g, 1, 1, 0, 1);
+        assertPathLengthEquals(1.0f, g, 1, 1, 1, 0);
+        assertPathLengthEquals(1.0f, g, 1, 1, 2, 1);
+        assertPathLengthEquals(1.0f, g, 1, 1, 1, 2);
     }
 
     @Test
@@ -61,8 +61,8 @@ public class AStarPathFinderTest {
             {1, 1, 1, 1},
             {1, 1, 1, 1},
             {1, 1, 1, 1}});
-        assertPathLengthEquals(3.0, g, 0, 0, 3, 0);
-        assertPathLengthEquals(3.83, g, 0, 0, 3, 2);
+        assertPathLengthEquals(3.0f, g, 0, 0, 3, 0);
+        assertPathLengthEquals(3.83f, g, 0, 0, 3, 2);
     }
 
     @Test
@@ -72,9 +72,9 @@ public class AStarPathFinderTest {
             {1, 1, 0, 0, 1},
             {1, 0, 1, 1, 1},
             {1, 1, 1, 0, 1}});
-        assertPathLengthEquals(9.66, g, 0, 0, 2, 0);
-        assertPathLengthEquals(5.83, g, 0, 0, 3, 2);
-        assertPathLengthEquals(7.24, g, 0, 0, 4, 3);
+        assertPathLengthEquals(9.66f, g, 0, 0, 2, 0);
+        assertPathLengthEquals(5.83f, g, 0, 0, 3, 2);
+        assertPathLengthEquals(7.24f, g, 0, 0, 4, 3);
     }
 
     @Test
@@ -83,8 +83,8 @@ public class AStarPathFinderTest {
             {1, 0, 1},
             {1, 0, 0},
             {1, 1, 1}});
-        assertPathLengthEquals(0, g, 0, 0, 2, 0);
-        assertPathLengthEquals(0, g, 1, 2, 2, 0);
+        assertPathLengthEquals(0.0f, g, 0, 0, 2, 0);
+        assertPathLengthEquals(0.0f, g, 1, 2, 2, 0);
     }
 
     @Test

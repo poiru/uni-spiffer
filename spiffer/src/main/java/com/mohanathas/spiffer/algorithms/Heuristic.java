@@ -17,16 +17,16 @@ public enum Heuristic {
     Manhattan,
     Zero;
 
-    public double distance(int dx, int dy) {
+    public float distance(int dx, int dy) {
         dx = Math.abs(dx);
         dy = Math.abs(dy);
 
         switch (this) {
             case Chebyshev: return Math.max(dx, dy);
-            case Euclidean: return Math.sqrt(dx * dx + dy * dy);
+            case Euclidean: return (float)Math.sqrt(dx * dx + dy * dy);
             case Manhattan: return dx + dy;
         }
 
-        return 0.0;
+        return 0.0f;
     }
 }
