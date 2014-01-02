@@ -14,19 +14,20 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Tests the AStarPathFinder/DijkstraPathFinder classes.
  */
 public class AStarPathFinderTest {
     public AStarPathFinderTest() {
     }
 
-    private void assertPathSizeEquals(int expected, Graph g, int x1, int y1, int x2, int y2) {
-        final List<Point> path = g.findPath(new DijkstraPathFinder(), new Point(x1, y1), new Point(x2, y2));
+    private void assertPathLengthEquals(double expected, Graph g, int x1, int y1, int x2, int y2) {
+        final Point start = new Point(x1, y1);
+        final List<Point> path = g.findPath(new DijkstraPathFinder(), start, new Point(x2, y2));
         if (expected == 0) {
             assertNull(path);
         } else {
             assertNotNull(path);
-            assertEquals(expected, path.size());
+            assertEquals(expected, Graph.calculatePathLength(start, path), 0.01);
         }
     }
 
@@ -48,10 +49,10 @@ public class AStarPathFinderTest {
             {1, 1, 1},
             {1, 1, 1},
             {1, 1, 1}});
-        assertPathSizeEquals(1, g, 1, 1, 0, 1);
-        assertPathSizeEquals(1, g, 1, 1, 1, 0);
-        assertPathSizeEquals(1, g, 1, 1, 2, 1);
-        assertPathSizeEquals(1, g, 1, 1, 1, 2);
+        assertPathLengthEquals(1, g, 1, 1, 0, 1);
+        assertPathLengthEquals(1, g, 1, 1, 1, 0);
+        assertPathLengthEquals(1, g, 1, 1, 2, 1);
+        assertPathLengthEquals(1, g, 1, 1, 1, 2);
     }
 
     @Test
@@ -60,31 +61,8 @@ public class AStarPathFinderTest {
             {1, 1, 1, 1},
             {1, 1, 1, 1},
             {1, 1, 1, 1}});
-        assertPathSizeEquals(3, g, 0, 0, 3, 0);
-        assertPathSizeEquals(3, g, 0, 0, 3, 2);
-    }
-
-    @Test
-    public void testDiagonalPath() {
-        final Graph g = Graph.createFromIntArray(new int[][] {
-            {1, 0, 1},
-            {1, 1, 1}});
-        final List<Point> path = g.findPath(new DijkstraPathFinder(), new Point(0, 0), new Point(2, 0));
-        assertEquals(path.get(0), new Point(1, 1));
-        assertEquals(path.get(1), new Point(2, 0));
-    }
-
-    @Test
-    public void testVisitedPath() {
-        final Graph g = new Graph(5, 5);
-        final Point start = new Point(0, 0);
-        final Point end = new Point(4, 4);
-
-        assertNotNull(g.findPath(new DijkstraPathFinder(), start, end));
-        assertVisitedCountEquals(24, g);
-
-        assertNotNull(g.findPath(new AStarPathFinder(Heuristic.Manhattan), start, end));
-        assertVisitedCountEquals(4, g);
+        assertPathLengthEquals(3.0, g, 0, 0, 3, 0);
+        assertPathLengthEquals(3.83, g, 0, 0, 3, 2);
     }
 
     @Test
@@ -94,9 +72,9 @@ public class AStarPathFinderTest {
             {1, 1, 0, 0, 1},
             {1, 0, 1, 1, 1},
             {1, 1, 1, 0, 1}});
-        assertPathSizeEquals(8, g, 0, 0, 2, 0);
-        assertPathSizeEquals(5, g, 0, 0, 3, 2);
-        assertPathSizeEquals(6, g, 0, 0, 4, 3);
+        assertPathLengthEquals(9.66, g, 0, 0, 2, 0);
+        assertPathLengthEquals(5.83, g, 0, 0, 3, 2);
+        assertPathLengthEquals(7.24, g, 0, 0, 4, 3);
     }
 
     @Test
@@ -105,7 +83,20 @@ public class AStarPathFinderTest {
             {1, 0, 1},
             {1, 0, 0},
             {1, 1, 1}});
-        assertPathSizeEquals(0, g, 0, 0, 2, 0);
-        assertPathSizeEquals(0, g, 1, 2, 2, 0);
+        assertPathLengthEquals(0, g, 0, 0, 2, 0);
+        assertPathLengthEquals(0, g, 1, 2, 2, 0);
+    }
+
+    @Test
+    public void testVisitedCount() {
+        final Graph g = new Graph(5, 5);
+        final Point start = new Point(0, 0);
+        final Point end = new Point(4, 4);
+
+        assertNotNull(g.findPath(new DijkstraPathFinder(), start, end));
+        assertVisitedCountEquals(24, g);
+
+        assertNotNull(g.findPath(new AStarPathFinder(Heuristic.Manhattan), start, end));
+        assertVisitedCountEquals(4, g);
     }
 }
