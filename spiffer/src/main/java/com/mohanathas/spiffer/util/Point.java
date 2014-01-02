@@ -12,12 +12,12 @@ package com.mohanathas.spiffer.util;
  * Represents a location in (x, y) coordinate space.
  */
 public class Point {
-    int mX;
-    int mY;
+    private final int mX;
+    private final int mY;
 
     public Point(int x, int y) {
-        this.mX = x;
-        this.mY = y;
+        mX = x;
+        mY = y;
     }
 
     public int getX() {
@@ -26,6 +26,18 @@ public class Point {
 
     public int getY() {
         return mY;
+    }
+
+    /**
+     * Calculates the distance between this point and the specified point.
+     *
+     * @param other Point to compare to.
+     * @return Distance between the points.
+     */
+    public float distanceTo(Point other) {
+        final int dx = mX - other.getX();
+        final int dy = mY - other.getY();
+        return (float)Math.sqrt(dx * dx + dy * dy);
     }
 
     @Override

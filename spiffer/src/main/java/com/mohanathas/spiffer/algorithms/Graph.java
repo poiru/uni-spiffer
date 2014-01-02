@@ -86,19 +86,37 @@ public final class Graph {
      * Finds a list of Points connecting the nodes at |startPos| and |endPos|.
      *
      * @param finder A PathFinder instance used for the search.
-     * @param startPos Start position.
-     * @param endPos End position.
+     * @param startPoint Start position.
+     * @param endPoint End point.
      * @return List of Points if a path was found or |null| otherwise.
      */
-    public List<Point> findPath(PathFinder finder, Point startPos, Point endPos) {
+    public List<Point> findPath(PathFinder finder, Point startPoint, Point endPoint) {
         if (mDirty) {
             // We need to clear e.g. the visited flag of the nodes.
             reset();
         }
 
-        final List<Point> path = finder.findPath(this, getNode(startPos), getNode(endPos));
+        final List<Point> path = finder.findPath(this, getNode(startPoint), getNode(endPoint));
         mDirty = true;
         return path;
+    }
+
+    /**
+     * Calculates the total length of a solution path.
+     *
+     * @param startPoint Start point.
+     * @param points List of points to take from startPoint in order to reach goal.
+     * @return Total distance of path.
+     */
+    public static double calculatePathLength(Point startPoint, List<Point> points) {
+        double length = 0.0;
+        Point prevPoint = startPoint;
+        for (Point point : points) {
+            length += point.distanceTo(prevPoint);
+            prevPoint = point;
+        }
+
+        return length;
     }
 
     /**

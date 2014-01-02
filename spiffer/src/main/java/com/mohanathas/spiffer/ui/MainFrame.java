@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -38,6 +39,7 @@ public class MainFrame extends JFrame {
     private GraphPanel mGraphPanel;
     private JComboBox mAlgorithmComboBox;
     private JComboBox mHeuristicComboBox;
+    private JLabel mLengthLabel;
 
     private SettingManager mSettingManager = new SettingManager();
 
@@ -79,7 +81,9 @@ public class MainFrame extends JFrame {
                     case "Dijkstra": pathFinder = new DijkstraPathFinder(); break;
                     case "A*":       pathFinder = new AStarPathFinder(heuristic); break;
                 }
-                mGraphPanel.findPath(pathFinder);
+
+                final double length = mGraphPanel.findPath(pathFinder);
+                mLengthLabel.setText(new DecimalFormat("0.##").format(length));
             }
         });
 
@@ -103,7 +107,7 @@ public class MainFrame extends JFrame {
 
         mHeuristicComboBox = new JComboBox(new String[] { "Chebyshev", "Euclidean", "Manhattan" });
         mHeuristicComboBox.setVisible(false);
-        
+
         final JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.LEFT));
         buttonPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         buttonPane.add(solveButton);
@@ -112,8 +116,12 @@ public class MainFrame extends JFrame {
         buttonPane.add(new JLabel("Algorithm: "));
         buttonPane.add(mAlgorithmComboBox);
         buttonPane.add(mHeuristicComboBox);
-        buttonPane.add(Box.createHorizontalGlue());
-
         container.add(buttonPane, BorderLayout.PAGE_START);
+
+        mLengthLabel = new JLabel("0");
+        final JPanel statusPane = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        statusPane.add(new JLabel("Length:"));
+        statusPane.add(mLengthLabel);
+        container.add(statusPane, BorderLayout.PAGE_END);
     }
 }

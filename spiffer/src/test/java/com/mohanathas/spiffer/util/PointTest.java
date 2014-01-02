@@ -19,6 +19,12 @@ public class PointTest {
     }
 
     @Test
+    public void testDistanceTo() {
+        assertEquals(2.0f, new Point(0, 0).distanceTo(new Point(0, 2)), 0.01f);
+        assertEquals((float)Math.sqrt(2.0f), new Point(0, 0).distanceTo(new Point(-1, -1)), 0.01f);
+    }
+
+    @Test
     public void testEquals() {
         final Point point = new Point(1, 2);
         assertTrue(new Point(1, 2).equals(new Point(1, 2)));

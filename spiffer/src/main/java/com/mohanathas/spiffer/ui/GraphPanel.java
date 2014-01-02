@@ -142,18 +142,19 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     public void mouseMoved(MouseEvent e) {
     }
 
-    public void findPath(PathFinder pathFinder) {
+    double findPath(PathFinder pathFinder) {
         mSolutionPoints = mGraph.findPath(pathFinder, mStartPoint, mEndPoint);
         repaint();
+        return mSolutionPoints == null ? 0.0 : Graph.calculatePathLength(mStartPoint, mSolutionPoints);
     }
 
-    public void clearWalls() {
+    void clearWalls() {
         mSolutionPoints = null;
         mGraph.clearWalls();
         repaint();
     }
 
     private Point panelPointToGraphPoint(java.awt.Point point) {
-        return new Point((int)point.getX() / BOX_SIZE, (int)point.getY() / BOX_SIZE);
+        return new Point(point.x / BOX_SIZE, point.y / BOX_SIZE);
     }
 }
