@@ -111,11 +111,11 @@ public class BinaryMinHeap<T extends Comparable<T>> {
     }
 
     private int leftChild(int i) {
-        return 2 * Math.max(i, 1) - 1;
+        return i == 0 ? 1 : 2 * i;
     }
 
     private int rightChild(int i) {
-        return 2 * Math.max(i, 1);
+        return i == 0 ? 2 : 2 * i + 1;
     }
 
     private void ensureCapacity() {
