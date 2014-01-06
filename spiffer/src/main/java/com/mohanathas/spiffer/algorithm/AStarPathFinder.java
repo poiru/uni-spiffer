@@ -41,37 +41,21 @@ public class AStarPathFinder implements PathFinder {
                 continue;
             }
 
-            for (int y = -1; y <= 1; ++y) {
-                for (int x = -1; x <= 1; ++x) {
-                    if (y == 0 && x == 0) {
-                        continue;
-                    }
+            for (final Node neighbor : graph.findNodeNeighbors(node)) {
+                if (neighbor.isVisited()) {
+                    continue;
+                }
 
-                    final Node neighborNode = graph.getNode(node.getX() + x, node.getY() + y);
-                    if (neighborNode == null || neighborNode.isWall() || neighborNode.isVisited()) {
-                        continue;
-                    }
+                final float distance = node.getPoint().distanceTo(neighbor.getPoint());
+                if (neighbor.getStartDistance() > node.getStartDistance() + distance) {
+                    neighbor.setParent(node);
+                    neighbor.setStartDistance(node.getStartDistance() + distance);
 
-                    // Disallow diagonal movement if the shared neighbors of the node and the
-                    // neighbor node are both walls.
-                    final boolean diagonal = x != 0 && y != 0;
-                    if (diagonal &&
-                        graph.getNode(node.getX(), node.getY() + y).isWall() &&
-                        graph.getNode(node.getX() + x, node.getY()).isWall()) {
-                        continue;
-                    }
+                    final int dx = neighbor.getX() - endNode.getX();
+                    final int dy = neighbor.getY() - endNode.getY();
+                    neighbor.setGoalDistance(mHeuristic.distance(dx, dy));
 
-                    final float distance = diagonal ? (float)Math.sqrt(2.0) : 1.0f;
-                    if (neighborNode.getStartDistance() > node.getStartDistance() + distance) {
-                        neighborNode.setParent(node);
-                        neighborNode.setStartDistance(node.getStartDistance() + distance);
-
-                        final int dx = neighborNode.getX() - endNode.getX();
-                        final int dy = neighborNode.getY() - endNode.getY();
-                        neighborNode.setGoalDistance(mHeuristic.distance(dx, dy));
-
-                        heap.add(neighborNode);
-                    }
+                    heap.add(neighbor);
                 }
             }
 

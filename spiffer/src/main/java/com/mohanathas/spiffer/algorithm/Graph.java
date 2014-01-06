@@ -9,6 +9,7 @@
 package com.mohanathas.spiffer.algorithm;
 
 import com.mohanathas.spiffer.util.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -120,6 +121,41 @@ public final class Graph {
     }
 
     /**
+     * Finds the non-wall neighbors of the specified node.
+     *
+     * @param node Node to get the neighbors of.
+     * @return List of neighbor nodes.
+     */
+    List<Node> findNodeNeighbors(Node node) {
+        final List<Node> neighbors = new ArrayList<>();
+        for (int y = -1; y <= 1; ++y) {
+            for (int x = -1; x <= 1; ++x) {
+                if (y == 0 && x == 0) {
+                    continue;
+                }
+
+                final Node neighbor = getNode(node.getX() + x, node.getY() + y);
+                if (neighbor == null || neighbor.isWall()) {
+                    continue;
+                }
+
+                // Skip diagonal neighbors if both shared neighbors between the node and the
+                // neighbor are walls.
+                final boolean diagonal = x != 0 && y != 0;
+                if (diagonal &&
+                    getNode(node.getX(), node.getY() + y).isWall() &&
+                    getNode(node.getX() + x, node.getY()).isWall()) {
+                    continue;
+                }
+
+                neighbors.add(neighbor);
+            }
+        }
+
+        return neighbors;
+    }
+
+    /**
      * Resets the nodes in the grid if needed.
      */
     public void reset() {
@@ -154,7 +190,7 @@ public final class Graph {
     public void resize(int width, int height) {
         if (width == getWidth() && height == getHeight()) return;
 
-        Node[][] newGrid = new Node[height][width];
+        final Node[][] newGrid = new Node[height][width];
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
                 newGrid[y][x] = getNode(x, y);
@@ -207,7 +243,7 @@ public final class Graph {
     public static Graph createFromIntArray(int[][] ints) {
         if (ints == null || ints.length == 0 || ints[0].length == 0) return null;
 
-        Graph graph = new Graph(ints[0].length, ints.length);
+        final Graph graph = new Graph(ints[0].length, ints.length);
         for (int y = 0; y < ints.length; ++y) {
             if (ints[y].length != ints[0].length) return null;
             for (int x = 0; x < ints[y].length; ++x) {

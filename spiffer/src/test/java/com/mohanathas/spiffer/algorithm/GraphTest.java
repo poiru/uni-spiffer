@@ -9,6 +9,7 @@
 package com.mohanathas.spiffer.algorithm;
 
 import com.mohanathas.spiffer.util.Point;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -96,6 +97,20 @@ public class GraphTest {
         g.setWall(new Point(1, 1), true);
         assertFalse(g.isWall(new Point(1, 1)));
         assertFalse(g.isVisited(new Point(1, 1)));
+    }
+
+    @Test
+    public void testFindNodeNeighbors() {
+        final Graph g = Graph.createFromIntArray(new int[][] {
+            {1, 1, 0},
+            {0, 1, 1},
+            {1, 0, 1}});
+        final List<Node> neigbors = g.findNodeNeighbors(g.getNode(1, 1));
+        assertEquals(4, neigbors.size());
+        assertTrue(neigbors.contains(g.getNode(0, 0)));
+        assertTrue(neigbors.contains(g.getNode(1, 0)));
+        assertTrue(neigbors.contains(g.getNode(2, 1)));
+        assertTrue(neigbors.contains(g.getNode(2, 2)));
     }
 
     @Test
