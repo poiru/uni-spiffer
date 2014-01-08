@@ -21,6 +21,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -36,27 +43,41 @@ import javax.swing.WindowConstants;
  * Main application window.
  */
 public class MainFrame extends JFrame {
+    private static final String SETTING_FILE_PATH = "spiffer.cfg";
+    private final SettingManager mSettingManager = new SettingManager();
+
     private GraphPanel mGraphPanel;
     private JComboBox mAlgorithmComboBox;
     private JComboBox mHeuristicComboBox;
     private JLabel mLengthLabel;
 
-    private SettingManager mSettingManager = new SettingManager();
-
     public MainFrame() {
         super("Spiffer");
-        super.setIconImage(new ImageIcon(MainFrame.class.getResource("icon.png")).getImage());
-        super.setPreferredSize(new Dimension(600, 500));
-        super.setMinimumSize(new Dimension(600, 300));
-        super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(MainFrame.class.getResource("icon.png")).getImage());
+        setPreferredSize(new Dimension(600, 500));
+        setMinimumSize(new Dimension(600, 300));
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        createComponents(super.getContentPane());
-        super.pack();
+        createComponents(getContentPane());
+        pack();
 
-        super.setJMenuBar(new MainMenuBar(mGraphPanel));
+        setJMenuBar(new MainMenuBar(mGraphPanel));
+        setLocationRelativeTo(null);
 
-        super.setLocationRelativeTo(null);
-        super.setVisible(true);
+        readSettingFile();
+        applySettings();
+
+        // Save the settings when the window is closed.
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                updateSettings();
+                writeSettingFile();
+            }
+        });
+
+        setVisible(true);
     }
 
     private void createComponents(Container container) {
@@ -123,5 +144,59 @@ public class MainFrame extends JFrame {
         statusPane.add(new JLabel("Length:"));
         statusPane.add(mLengthLabel);
         container.add(statusPane, BorderLayout.PAGE_END);
+    }
+
+    /**
+     * Updates the settings to reflect the frame and panels..
+     */
+    private void updateSettings() {
+        // TODO: Store the unmaximized position and size.
+        mSettingManager.setSetting("X", getX());
+        mSettingManager.setSetting("Y", getY());
+        mSettingManager.setSetting("W", getWidth());
+        mSettingManager.setSetting("H", getHeight());
+        mSettingManager.setSetting("Maximize", (getExtendedState() & JFrame.MAXIMIZED_BOTH) != 0);
+    }
+
+    /**
+     * Updates the frame and panels to reflect the settings.
+     */
+    private void applySettings() {
+        // TODO: Validate settings.
+        if (mSettingManager.getSetting("Maximize", false)) {
+            setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        } else {
+            final int x = mSettingManager.getSetting("X", getX());
+            final int y = mSettingManager.getSetting("Y", getX());
+            final int w = mSettingManager.getSetting("W", getWidth());
+            final int h = mSettingManager.getSetting("H", getHeight());
+            setBounds(x, y, w, h);
+        }
+    }
+
+    /**
+     * Reads saved settings from the setting file.
+     */
+    private void readSettingFile() {
+        if (Files.exists(Paths.get(SETTING_FILE_PATH))) {
+            try {
+                mSettingManager.deserialize(new String(
+                    Files.readAllBytes(Paths.get(SETTING_FILE_PATH)), StandardCharsets.UTF_8));
+            } catch (IOException ex) {
+                // Failing to read the setting file is not critical so ignore the exception.
+            }
+        }
+    }
+
+    /**
+     * Writes current settings to the setting file..
+     */
+    private void writeSettingFile() {
+        final byte[] data = mSettingManager.serialize().getBytes(Charset.forName("UTF-8"));
+        try {
+            Files.write(Paths.get(SETTING_FILE_PATH), data);
+        } catch (IOException ex) {
+            // Failing to save the setting file is not critical so ignore the exception.
+        }
     }
 }

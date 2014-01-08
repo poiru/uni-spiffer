@@ -50,8 +50,9 @@ public class SettingManager {
     /**
      * Gets the value of a setting as a string.
      *
-     * @return String value corrosponding to |key|. If |key| does not exist,
-     * returns |defaultValue| instead.
+     * @param key Name of the setting.
+     * @param defaultValue Return value to use if the given key is not found.
+     * @return String value for the given key.
      */
     public String getSetting(String key, String defaultValue) {
         final String value = mSettingMap.get(key.toLowerCase());
@@ -59,14 +60,27 @@ public class SettingManager {
     }
 
     /**
-     * Gets the value of a setting as a converted integer value.
+     * Gets the value of a setting coverted to an integer.
      *
-     * @return String value corrosponding to |key|. If |key| does not exist,
-     * returns |defaultValue| instead.
+     * @param key Name of the setting.
+     * @param defaultValue Return value to use if the given key is not found.
+     * @return Integer converted value for the given key.
      */
     public int getSetting(String key, int defaultValue) {
         final String value = mSettingMap.get(key.toLowerCase());
         return (value == null) ? defaultValue : Integer.parseInt(value);
+    }
+
+    /**
+     * Gets the value of a setting coverted to a boolean.
+     *
+     * @param key Name of the setting.
+     * @param defaultValue Return value to use if the given key is not found.
+     * @return Boolean converted value for the given key.
+     */
+    public boolean getSetting(String key, boolean defaultValue) {
+        final String value = mSettingMap.get(key.toLowerCase());
+        return (value == null) ? defaultValue : Boolean.parseBoolean(value);
     }
 
     public void setSetting(String key, String value) {
@@ -75,5 +89,9 @@ public class SettingManager {
 
     public void setSetting(String key, int value) {
         mSettingMap.put(key.toLowerCase(), Integer.toString(value));
+    }
+
+    public void setSetting(String key, boolean value) {
+        mSettingMap.put(key.toLowerCase(), Boolean.toString(value));
     }
 }

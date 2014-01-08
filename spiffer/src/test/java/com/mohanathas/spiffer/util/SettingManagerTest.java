@@ -27,8 +27,14 @@ public class SettingManagerTest {
         assertEquals("a=1\n", sm.serialize());
 
         sm.setSetting("b", 2);
+        sm.setSetting("c", false);
+        sm.setSetting("d", true);
+
         final String str = sm.serialize();
-        assertTrue(str.contains("a=1\n") && str.contains("b=2\n"));
+        assertTrue(str.contains("a=1\n"));
+        assertTrue(str.contains("b=2\n"));
+        assertTrue(str.contains("c=false\n"));
+        assertTrue(str.contains("d=true\n"));
     }
 
     @Test
@@ -51,8 +57,10 @@ public class SettingManagerTest {
         final SettingManager sm = new SettingManager();
         sm.setSetting("a", "1");
         sm.setSetting("b", 2);
+        sm.setSetting("c", true);
         assertEquals("1", sm.getSetting("a", ""));
         assertEquals(2, sm.getSetting("b", 0));
+        assertEquals(true, sm.getSetting("c", false));
 
         sm.setSetting("b", 3);
         assertEquals("3", sm.getSetting("b", ""));
@@ -63,5 +71,6 @@ public class SettingManagerTest {
         final SettingManager sm = new SettingManager();
         assertEquals("1", sm.getSetting("a", "1"));
         assertEquals(2, sm.getSetting("b", 2));
+        assertEquals(true, sm.getSetting("c", true));
     }
 }
