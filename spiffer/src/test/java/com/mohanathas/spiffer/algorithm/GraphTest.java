@@ -25,22 +25,40 @@ public class GraphTest {
         final Graph g = Graph.createFromIntArray(new int[][] {
             {0, 1, 1},
             {1, 0, 1}});
-        assertEquals("#..\n.#.\n", g.serialize());
+        assertEquals("#..\n.#.\n", g.serialize(null, null));
+    }
+
+    @Test
+    public void testSerializeForStartAndGoalPoints() {
+        final Graph g = new Graph(3, 2);
+        final Point startPoint = new Point(2, 1);
+        final Point goalPoint = new Point(1, 0);
+        assertEquals(".G.\n..S\n", g.serialize(startPoint, goalPoint));
     }
 
     @Test
     public void testDeserialize() {
         final Graph g = new Graph(3, 2);
-        g.deserialize("#..\n.#.\n");
+        g.deserialize("#..\n.#.\n", null, null);
         assertTrue(g.isWall(new Point(0, 0)));
         assertTrue(!g.isWall(new Point(1, 0)));
         assertTrue(g.isWall(new Point(1, 1)));
     }
 
     @Test
+    public void testDeserializeForStartAndGoalPoints() {
+        final Graph g = new Graph(3, 2);
+        final Point startPoint = new Point(0, 0);
+        final Point goalPoint = new Point(0, 0);
+        g.deserialize("#G.\n.#S\n", startPoint, goalPoint);
+        assertEquals(new Point(2, 1), startPoint);
+        assertEquals(new Point(1, 0), goalPoint);
+    }
+
+    @Test
     public void testMalformedDeserialize() {
         final Graph g = new Graph(2, 2);
-        g.deserialize("#.\n.####\n####\n");
+        g.deserialize("#.\n.####\n####\n", null, null);
         assertTrue(!g.isWall(new Point(2, 2)));
     }
 

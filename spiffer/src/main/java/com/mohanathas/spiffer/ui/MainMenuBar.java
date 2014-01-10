@@ -28,7 +28,7 @@ import javax.swing.KeyStroke;
  */
 public class MainMenuBar extends JMenuBar {
     public MainMenuBar(final GraphPanel graphPanel) {
-        super.add(createFileMenu(graphPanel));
+        add(createFileMenu(graphPanel));
     }
 
     private JMenu createFileMenu(final GraphPanel graphPanel) {
@@ -43,7 +43,9 @@ public class MainMenuBar extends JMenuBar {
                     try {
                         graphPanel.mGraph.deserialize(
                             new String(Files.readAllBytes(
-                                Paths.get(fc.getSelectedFile().getPath())), StandardCharsets.UTF_8));
+                                Paths.get(fc.getSelectedFile().getPath())), StandardCharsets.UTF_8),
+                            graphPanel.mStartPoint,
+                            graphPanel.mEndPoint);
                         graphPanel.repaint();
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(
@@ -63,7 +65,8 @@ public class MainMenuBar extends JMenuBar {
                 final JFileChooser fc = new JFileChooser();
                 if (fc.showSaveDialog(fileSave) == JFileChooser.APPROVE_OPTION) {
                     try (FileWriter writer = new FileWriter(fc.getSelectedFile())) {
-                        writer.append(graphPanel.mGraph.serialize());
+                        writer.append(graphPanel.mGraph.serialize(
+                            graphPanel.mStartPoint, graphPanel.mEndPoint));
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(
                             null, "Error writing to:\n" + fc.getSelectedFile().getPath(),

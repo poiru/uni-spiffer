@@ -202,11 +202,26 @@ public final class Graph {
         mGrid = newGrid;
     }
 
-    public String serialize() {
+    /**
+     * Serializes the graph state to a string.
+     *
+     * @param startPoint Optional start point to include in the serialized string.
+     * @param goalPoint Optional end point to include in the serialized string.
+     * @return Serialized representation of the graph.
+     */
+    public String serialize(Point startPoint, Point goalPoint) {
         final StringBuilder sb = new StringBuilder();
         for (int y = 0; y < mGrid.length; ++y) {
             for (int x = 0; x < mGrid[y].length; ++x) {
-                sb.append(mGrid[y][x].isWall() ? '#' : '.');
+                char ch = '.';
+                if (startPoint != null && x == startPoint.getX() && y == startPoint.getY()) {
+                    ch = 'S';
+                } else if (goalPoint != null && x == goalPoint.getX() && y == goalPoint.getY()) {
+                    ch = 'G';
+                } else if (mGrid[y][x].isWall()) {
+                    ch = '#';
+                }
+                sb.append(ch);
             }
 
             sb.append('\n');
@@ -215,7 +230,14 @@ public final class Graph {
         return sb.toString();
     }
 
-    public void deserialize(String data) {
+    /**
+     * Updates the state of the graph to match the state of the given serialized data.
+     *
+     * @param data Serialized data from a previous call to serialize().
+     * @param startPoint Optional point whose position is set to match the start point in the data.
+     * @param goalPoint Optional point whose position is set to match the goal point in the data.
+     */
+    public void deserialize(String data, Point startPoint, Point goalPoint) {
         int x = 0;
         int y = 0;
         for (char ch : data.toCharArray()) {
@@ -226,7 +248,13 @@ public final class Graph {
             }
 
             if (y < mGrid.length && x < mGrid[0].length) {
-                mGrid[y][x].setWall(ch == '#');
+                if (ch == 'S' && startPoint != null) {
+                    startPoint.set(x, y);
+                } else if (ch == 'G' && goalPoint != null) {
+                    goalPoint.set(x, y);
+                } else if (ch == '#' || ch == '.') {
+                    mGrid[y][x].setWall(ch == '#');
+                }
             }
 
             ++x;

@@ -29,10 +29,10 @@ class GraphDrawer {
 
     private static void fillBox(Graphics g, int x, int y) {
         g.fillRect(
-                x * GraphPanel.BOX_SIZE + 1,
-                y * GraphPanel.BOX_SIZE + 1,
-                GraphPanel.BOX_SIZE - 1,
-                GraphPanel.BOX_SIZE - 1);
+            x * GraphPanel.BOX_SIZE + 1,
+            y * GraphPanel.BOX_SIZE + 1,
+            GraphPanel.BOX_SIZE - 1,
+            GraphPanel.BOX_SIZE - 1);
     }
 
     public static void drawWallPoints(Graphics g, Graph graph) {
@@ -89,10 +89,10 @@ class GraphDrawer {
         Point prevPoint = startPoint;
         for (Point point : solutionPoints) {
             g.drawLine(
-                    prevPoint.getX() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2),
-                    prevPoint.getY() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2),
-                    point.getX() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2),
-                    point.getY() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2));
+                prevPoint.getX() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2),
+                prevPoint.getY() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2),
+                point.getX() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2),
+                point.getY() * GraphPanel.BOX_SIZE + (GraphPanel.BOX_SIZE / 2));
             prevPoint = point;
         }
     }

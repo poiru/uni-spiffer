@@ -26,8 +26,8 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     static final int BOX_SIZE = 20;
 
     final Graph mGraph = new Graph(0, 0);
-    private Point mStartPoint = new Point(0, 0);
-    private Point mEndPoint = new Point(5, 5);
+    Point mStartPoint = new Point(0, 0);
+    Point mEndPoint = new Point(5, 5);
     private List<Point> mSolutionPoints = null;
 
     private static enum DragItem {
@@ -40,16 +40,16 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     private DragItem mDragItem = DragItem.NONE;
 
     public GraphPanel() {
-        super.setBackground(Color.WHITE);
-        super.addMouseListener(this);
-        super.addMouseMotionListener(this);
+        setBackground(Color.WHITE);
+        addMouseListener(this);
+        addMouseMotionListener(this);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        mGraph.resize(super.getWidth() / BOX_SIZE, super.getHeight() / BOX_SIZE);
+        mGraph.resize(getWidth() / BOX_SIZE, getHeight() / BOX_SIZE);
 
         GraphDrawer.drawWallPoints(g, mGraph);
         GraphDrawer.drawVisitedPoints(g, mGraph);
@@ -135,7 +135,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
                 break;
         }
 
-        super.repaint();
+        repaint();
     }
 
     @Override
@@ -151,6 +151,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     void clearWalls() {
         mSolutionPoints = null;
         mGraph.clearWalls();
+        mGraph.reset();
         repaint();
     }
 
