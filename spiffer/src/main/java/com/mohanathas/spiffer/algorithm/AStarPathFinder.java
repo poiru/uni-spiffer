@@ -42,26 +42,27 @@ public class AStarPathFinder implements PathFinder {
             }
 
             for (final Node neighbor : graph.findNodeNeighbors(node)) {
-                if (neighbor.isVisited()) {
-                    continue;
-                }
-
-                final float distance = node.getPoint().distanceTo(neighbor.getPoint());
-                if (neighbor.getStartDistance() > node.getStartDistance() + distance) {
-                    neighbor.setParent(node);
-                    neighbor.setStartDistance(node.getStartDistance() + distance);
-
-                    final int dx = neighbor.getX() - endNode.getX();
-                    final int dy = neighbor.getY() - endNode.getY();
-                    neighbor.setGoalDistance(mHeuristic.distance(dx, dy));
-
-                    heap.add(neighbor);
-                }
+                relax(heap, node, neighbor, endNode);
             }
 
             node.markVisited();
         } while (!heap.isEmpty());
 
         return null;
+    }
+
+    private void relax(final BinaryMinHeap<Node> heap, final Node node, final Node neighbor,
+            final Node endNode) {
+        final float distance = node.getPoint().distanceTo(neighbor.getPoint());
+        if (neighbor.getStartDistance() > node.getStartDistance() + distance) {
+            neighbor.setParent(node);
+            neighbor.setStartDistance(node.getStartDistance() + distance);
+
+            final int dx = neighbor.getX() - endNode.getX();
+            final int dy = neighbor.getY() - endNode.getY();
+            neighbor.setGoalDistance(mHeuristic.distance(dx, dy));
+
+            heap.add(neighbor);
+        }
     }
 }
