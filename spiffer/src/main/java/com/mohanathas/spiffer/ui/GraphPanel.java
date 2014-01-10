@@ -34,9 +34,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
         NONE, WALL, UNWALL, START, END
     }
 
-   /**
-    * Item that is currently being dragged.
-    */
+   /** Item that is currently being dragged. */
     private DragItem mDragItem = DragItem.NONE;
 
     public GraphPanel() {
@@ -49,7 +47,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        mGraph.resize(getWidth() / BOX_SIZE, getHeight() / BOX_SIZE);
+        resizeGraph(getWidth() / BOX_SIZE, getHeight() / BOX_SIZE);
 
         GraphDrawer.drawWallPoints(g, mGraph);
         GraphDrawer.drawVisitedPoints(g, mGraph);
@@ -145,7 +143,8 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     float findPath(PathFinder pathFinder) {
         mSolutionPoints = mGraph.findPath(pathFinder, mStartPoint, mGoalPoint);
         repaint();
-        return mSolutionPoints == null ? 0.0f : Graph.calculatePathLength(mStartPoint, mSolutionPoints);
+        return mSolutionPoints == null ? 0.0f
+                                       : Graph.calculatePathLength(mStartPoint, mSolutionPoints);
     }
 
     void clearWalls() {
@@ -153,6 +152,18 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
         mGraph.clearWalls();
         mGraph.reset();
         repaint();
+    }
+
+    private void resizeGraph(int w, int h) {
+        mGraph.resize(w, h);
+
+        // Ensure that the start point stays within the visible area.
+        mStartPoint.set(Math.min(mStartPoint.getX(), w - 1), Math.min(mStartPoint.getY(), h - 1));
+        mGraph.setWall(mStartPoint, false);
+
+        // Ensure that the goal point stays within the visible area.
+        mGoalPoint.set(Math.min(mGoalPoint.getX(), w - 1), Math.min(mGoalPoint.getY(), h - 1));
+        mGraph.setWall(mGoalPoint, false);
     }
 
     private Point panelPointToGraphPoint(java.awt.Point point) {
