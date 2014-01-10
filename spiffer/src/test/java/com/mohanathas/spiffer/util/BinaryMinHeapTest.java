@@ -32,22 +32,34 @@ public class BinaryMinHeapTest {
         mHeap.peek();
     }
 
+    private void assertPopOrder(int from, int to) {
+        for (int i = from; i <= to; ++i) {
+            assertEquals(new Integer(i), mHeap.pop());
+        }
+    }
+
     @Test
-    public void testPopOrder() {
-        mHeap.add(3);
-        mHeap.add(8);
-        mHeap.add(2);
-        mHeap.add(6);
-        mHeap.add(4);
-        mHeap.add(5);
-        mHeap.add(1);
-        mHeap.add(9);
-        mHeap.add(7);
-        mHeap.add(0);
-        assertEquals(new Integer(0), mHeap.pop());
-        assertEquals(new Integer(1), mHeap.pop());
-        assertEquals(new Integer(2), mHeap.pop());
-        assertEquals(new Integer(3), mHeap.pop());
+    public void testAscedingAddOrder() {
+        for (int i = 0; i <= 100; ++i) {
+            mHeap.add(i);
+        }
+        assertPopOrder(0, 100);
+    }
+
+    @Test
+    public void testDescedingAddOrder() {
+        for (int i = 100; i >= 0; --i) {
+            mHeap.add(i);
+        }
+        assertPopOrder(0, 100);
+    }
+
+    @Test
+    public void testBothAddOrder() {
+        for (int i = 0; i <= 100; ++i) {
+            mHeap.add(i % 2 == 0 ? i : 100 - i);
+        }
+        assertPopOrder(0, 100);
     }
 
     @Test
