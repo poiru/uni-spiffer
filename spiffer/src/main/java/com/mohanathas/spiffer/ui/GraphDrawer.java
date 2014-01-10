@@ -62,7 +62,7 @@ class GraphDrawer {
         fillBox(g, point.getX(), point.getY());
     }
 
-    public static void drawEndPoint(Graphics g, Point point) {
+    public static void drawGoalPoint(Graphics g, Point point) {
         g.setColor(END_COLOR);
         fillBox(g, point.getX(), point.getY());
     }

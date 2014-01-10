@@ -45,7 +45,7 @@ public class MainMenuBar extends JMenuBar {
                             new String(Files.readAllBytes(
                                 Paths.get(fc.getSelectedFile().getPath())), StandardCharsets.UTF_8),
                             graphPanel.mStartPoint,
-                            graphPanel.mEndPoint);
+                            graphPanel.mGoalPoint);
                         graphPanel.repaint();
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(
@@ -66,7 +66,7 @@ public class MainMenuBar extends JMenuBar {
                 if (fc.showSaveDialog(fileSave) == JFileChooser.APPROVE_OPTION) {
                     try (FileWriter writer = new FileWriter(fc.getSelectedFile())) {
                         writer.append(graphPanel.mGraph.serialize(
-                            graphPanel.mStartPoint, graphPanel.mEndPoint));
+                            graphPanel.mStartPoint, graphPanel.mGoalPoint));
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(
                             null, "Error writing to:\n" + fc.getSelectedFile().getPath(),

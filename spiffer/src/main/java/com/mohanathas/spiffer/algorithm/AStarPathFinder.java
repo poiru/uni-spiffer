@@ -23,17 +23,17 @@ public class AStarPathFinder implements PathFinder {
     }
 
     /**
-     * Finds a list of Points connecting |startNode| and |endNode|.
+     * Finds a list of Points connecting |startNode| and |goalNode|.
      */
     @Override
-    public List<Point> findPath(Graph graph, Node startNode, Node endNode) {
+    public List<Point> findPath(Graph graph, Node startNode, Node goalNode) {
         final BinaryMinHeap<Node> heap = new BinaryMinHeap<>();
         heap.add(startNode);
         startNode.setStartDistance(0.0f);
 
         do {
             final Node node = heap.pop();
-            if (node.equals(endNode)) {
+            if (node.equals(goalNode)) {
                 return node.getParentPoints();
             }
 
@@ -42,7 +42,7 @@ public class AStarPathFinder implements PathFinder {
             }
 
             for (final Node neighbor : graph.findNodeNeighbors(node)) {
-                relax(heap, node, neighbor, endNode);
+                relax(heap, node, neighbor, goalNode);
             }
 
             node.markVisited();

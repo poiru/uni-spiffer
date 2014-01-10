@@ -27,7 +27,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
 
     final Graph mGraph = new Graph(0, 0);
     Point mStartPoint = new Point(0, 0);
-    Point mEndPoint = new Point(5, 5);
+    Point mGoalPoint = new Point(5, 5);
     private List<Point> mSolutionPoints = null;
 
     private static enum DragItem {
@@ -54,7 +54,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
         GraphDrawer.drawWallPoints(g, mGraph);
         GraphDrawer.drawVisitedPoints(g, mGraph);
         GraphDrawer.drawStartPoint(g, mStartPoint);
-        GraphDrawer.drawEndPoint(g, mEndPoint);
+        GraphDrawer.drawGoalPoint(g, mGoalPoint);
         GraphDrawer.drawGrid(g, getWidth(), getHeight());
 
         if (mSolutionPoints != null) {
@@ -76,7 +76,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
 
         if (mStartPoint.equals(point)) {
             mDragItem = DragItem.START;
-        } else if (mEndPoint.equals(point)) {
+        } else if (mGoalPoint.equals(point)) {
             mDragItem = DragItem.END;
         } else {
             if (mGraph.isWall(point)) {
@@ -113,7 +113,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
 
         switch (mDragItem) {
             case WALL:
-                if (!mStartPoint.equals(point) && !mEndPoint.equals(point)) {
+                if (!mStartPoint.equals(point) && !mGoalPoint.equals(point)) {
                     mGraph.setWall(point, true);
                 }
                 break;
@@ -123,14 +123,14 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
                 break;
 
             case START:
-                if (!mGraph.isWall(point) && !mEndPoint.equals(point)) {
+                if (!mGraph.isWall(point) && !mGoalPoint.equals(point)) {
                     mStartPoint = point;
                 }
                 break;
 
             case END:
                 if (!mGraph.isWall(point) && !mStartPoint.equals(point)) {
-                    mEndPoint = point;
+                    mGoalPoint = point;
                 }
                 break;
         }
@@ -143,7 +143,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     }
 
     float findPath(PathFinder pathFinder) {
-        mSolutionPoints = mGraph.findPath(pathFinder, mStartPoint, mEndPoint);
+        mSolutionPoints = mGraph.findPath(pathFinder, mStartPoint, mGoalPoint);
         repaint();
         return mSolutionPoints == null ? 0.0f : Graph.calculatePathLength(mStartPoint, mSolutionPoints);
     }
