@@ -31,6 +31,12 @@ public class MainMenuBar extends JMenuBar {
         add(createFileMenu(graphPanel));
     }
 
+    /**
+     * Creates the File menu.
+     *
+     * @param graphPanel An instance of GraphPanel to associate the menu with.
+     * @return The created menu.
+     */
     private JMenu createFileMenu(final GraphPanel graphPanel) {
         final JMenuItem fileOpen = new JMenuItem("Open...");
         fileOpen.setMnemonic(KeyEvent.VK_O);

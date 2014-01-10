@@ -140,6 +140,12 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     public void mouseMoved(MouseEvent e) {
     }
 
+    /**
+     * Attempts to find a path and repaints to draw the possible solution.
+     *
+     * @param pathFinder An implementation of PathFinder to use for finding the path.
+     * @return The length of the path or 0.0f if not found.
+     */
     float findPath(PathFinder pathFinder) {
         mSolutionPoints = mGraph.findPath(pathFinder, mStartPoint, mGoalPoint);
         repaint();
@@ -147,6 +153,9 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
                                        : Graph.calculatePathLength(mStartPoint, mSolutionPoints);
     }
 
+    /**
+     * Clears the walls (and also the solution line and visited nodes).
+     */
     void clearWalls() {
         mSolutionPoints = null;
         mGraph.clearWalls();
@@ -154,6 +163,12 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
         repaint();
     }
 
+    /**
+     * Resizes the graph while ensuring that the start and goal points stay within the new size.
+     *
+     * @param w New width.
+     * @param h New height.
+     */
     private void resizeGraph(int w, int h) {
         mGraph.resize(w, h);
 
@@ -166,6 +181,12 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
         mGraph.setWall(mGoalPoint, false);
     }
 
+    /**
+     * Helper method to map a AWT Point using screen coordinates a point on the graph.
+     *
+     * @param point AWT point to convert.
+     * @return Point on the graph.
+     */
     private Point panelPointToGraphPoint(java.awt.Point point) {
         return new Point(point.x / BOX_SIZE, point.y / BOX_SIZE);
     }

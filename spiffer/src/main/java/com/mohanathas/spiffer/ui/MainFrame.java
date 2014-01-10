@@ -80,6 +80,11 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Creates and adds the components of the UI to the given container.
+     *
+     * @param container Container to add components to.
+     */
     private void createComponents(Container container) {
         mGraphPanel = new GraphPanel();
         container.add(mGraphPanel, BorderLayout.CENTER);

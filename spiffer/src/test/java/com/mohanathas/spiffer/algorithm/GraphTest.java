@@ -50,7 +50,8 @@ public class GraphTest {
         final Graph g = new Graph(3, 2);
         final Point startPoint = new Point(0, 0);
         final Point goalPoint = new Point(0, 0);
-        g.deserialize("#G.\n.#S\n", startPoint, goalPoint);
+        g.deserialize("#G.\n.#S\n", null, goalPoint);
+        g.deserialize("#G.\n.#S\n", startPoint, null);
         assertEquals(new Point(2, 1), startPoint);
         assertEquals(new Point(1, 0), goalPoint);
     }
