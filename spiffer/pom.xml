@@ -17,7 +17,20 @@
           <source>1.7</source>
           <target>1.7</target>
         </configuration>
-        <version>2.5</version>
+        <version>3.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.mohanathas.spiffer.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <version>2.4</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -45,7 +58,7 @@
             <param>com.mohanathas.spiffer.util.*</param>
           </targetTests>
         </configuration>
-        <version>0.30</version>
+        <version>0.32</version>
       </plugin>
     </plugins>
   </build>
