@@ -62,12 +62,17 @@ public final class Graph {
     /**
      * Checks if a point is a wall.
      *
-     * @param point Point to check.
+     * @param x X-position of the point to check.
+     * @param y Y-position of the point to check.
      * @return True if the point is a wall.
      */
-    public boolean isWall(Point point) {
-        final Node node = getNode(point);
+    public boolean isWall(int x, int y) {
+        final Node node = getNode(x, y);
         return node != null ? node.isWall() : false;
+    }
+
+    public boolean isWall(Point point) {
+        return isWall(point.getX(), point.getY());
     }
 
     /**
@@ -97,7 +102,7 @@ public final class Graph {
             reset();
         }
 
-        final List<Point> path = finder.findPath(this, getNode(startPoint), getNode(endPoint));
+        final List<Point> path = finder.findPath(this, startPoint, endPoint);
         mDirty = true;
         return path;
     }

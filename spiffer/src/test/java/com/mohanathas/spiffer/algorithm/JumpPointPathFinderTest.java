@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Birunthan Mohanathas
+ * Copyright (C) 2014 Birunthan Mohanathas
  *
  * Licensed under the MIT license <http://opensource.org/licenses/MIT>. This
  * file may not be copied, modified, or distributed except according to those
@@ -8,39 +8,30 @@
 
 package com.mohanathas.spiffer.algorithm;
 
+import static com.mohanathas.spiffer.algorithm.AStarPathFinderTest.assertVisitedCountEquals;
 import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests the AStarPathFinder/DijkstraPathFinder classes.
+ * Tests the JumpPointPathFinder class.
  */
-public class AStarPathFinderTest {
-    public AStarPathFinderTest() {
+public class JumpPointPathFinderTest {
+    private final JumpPointPathFinder mPathFinder = new JumpPointPathFinder(Heuristic.Chebyshev);
+
+    public JumpPointPathFinderTest() {
     }
 
-    private static void assertPathLengthEquals(float expected, Graph g, int x1, int y1, int x2, int y2) {
+    void assertPathLengthEquals(float expected, Graph g, int x1, int y1, int x2, int y2) {
         final Point start = new Point(x1, y1);
-        final List<Point> path = g.findPath(new DijkstraPathFinder(), start, new Point(x2, y2));
+        final List<Point> path = g.findPath(mPathFinder, start, new Point(x2, y2));
         if (expected == 0.0f) {
             assertNull(path);
         } else {
             assertNotNull(path);
             assertEquals(expected, Graph.calculatePathLength(start, path), 0.01f);
         }
-    }
-
-    static void assertVisitedCountEquals(int expected, Graph g) {
-        int visited = 0;
-        for (int y = 0; y < g.getWidth(); ++y) {
-            for (int x = 0; x < g.getWidth(); ++x) {
-                if (g.isVisited(new Point(x, y))) {
-                    ++visited;
-                }
-            }
-        }
-        assertEquals(expected, visited);
     }
 
     @Test
@@ -89,14 +80,15 @@ public class AStarPathFinderTest {
 
     @Test
     public void testVisitedCount() {
-        final Graph g = new Graph(5, 5);
-        final Point start = new Point(0, 0);
-        final Point end = new Point(4, 4);
-
-        assertNotNull(g.findPath(new DijkstraPathFinder(), start, end));
+        final Graph g = Graph.createFromIntArray(new int[][] {
+            {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
+            {1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1},
+            {1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1},
+            {1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1},
+            {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1}});
+        assertNotNull(g.findPath(mPathFinder, new Point(0, 0), new Point(10, 4)));
+        assertVisitedCountEquals(15, g);
+        assertNotNull(g.findPath(mPathFinder, new Point(0, 2), new Point(10, 2)));
         assertVisitedCountEquals(25, g);
-
-        assertNotNull(g.findPath(new AStarPathFinder(Heuristic.Manhattan), start, end));
-        assertVisitedCountEquals(5, g);
     }
 }

@@ -16,12 +16,12 @@ import java.util.List;
  */
 public abstract interface PathFinder {
     /**
-     * Finds a list of Points connecting the Nodes at |startPos| and |endPos|.
+     * Finds a path from startPoint and goalPoint as a series of points.
      *
      * @param graph Graph to search for the path.
-     * @param startNode Node to start the search from.
-     * @param goalNode Node that is to be reached from |startNode|.
-     * @return List of Points if a path was found or |null| otherwise.
+     * @param startPoint Point to start the search from.
+     * @param goalPoint Point that is to be reached from startNode.
+     * @return List of Points if a path was found or null otherwise.
      */
-    List<Point> findPath(Graph graph, Node startNode, Node goalNode);
+    List<Point> findPath(Graph graph, Point startPoint, Point goalPoint);
 }

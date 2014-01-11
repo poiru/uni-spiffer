@@ -11,6 +11,7 @@ package com.mohanathas.spiffer.ui;
 import com.mohanathas.spiffer.algorithm.AStarPathFinder;
 import com.mohanathas.spiffer.algorithm.DijkstraPathFinder;
 import com.mohanathas.spiffer.algorithm.Heuristic;
+import com.mohanathas.spiffer.algorithm.JumpPointPathFinder;
 import com.mohanathas.spiffer.algorithm.PathFinder;
 import com.mohanathas.spiffer.util.SettingManager;
 import java.awt.BorderLayout;
@@ -106,6 +107,7 @@ public class MainFrame extends JFrame {
                 switch (algorithmString) {
                     case "Dijkstra": pathFinder = new DijkstraPathFinder(); break;
                     case "A*":       pathFinder = new AStarPathFinder(heuristic); break;
+                    case "JPS":      pathFinder = new JumpPointPathFinder(heuristic); break;
                 }
 
                 final float length = mGraphPanel.findPath(pathFinder);
@@ -121,7 +123,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        mAlgorithmComboBox = new JComboBox(new String[] { "Dijkstra", "A*" });
+        mAlgorithmComboBox = new JComboBox(new String[] { "Dijkstra", "A*", "JPS" });
         mAlgorithmComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {

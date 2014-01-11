@@ -22,44 +22,46 @@ public class AStarPathFinder implements PathFinder {
         mHeuristic = heuristic;
     }
 
-    /**
-     * Finds a list of Points connecting |startNode| and |goalNode|.
-     */
     @Override
-    public List<Point> findPath(Graph graph, Node startNode, Node goalNode) {
+    public List<Point> findPath(Graph graph, Point startPoint, Point goalPoint) {
+        final Node startNode = graph.getNode(startPoint);
+        final Node goalNode = graph.getNode(goalPoint);
         final BinaryMinHeap<Node> heap = new BinaryMinHeap<>();
-        heap.add(startNode);
         startNode.setStartDistance(0.0f);
+        heap.add(startNode);
 
         do {
             final Node node = heap.pop();
+            node.markVisited();
             if (node.equals(goalNode)) {
                 return node.getParentPoints();
             }
 
-            if (node.isVisited()) {
-                continue;
-            }
-
-            for (final Node neighbor : graph.findNodeNeighbors(node)) {
-                relax(heap, node, neighbor, goalNode);
-            }
-
-            node.markVisited();
+            handleNeighbors(graph, heap, node, goalNode);
         } while (!heap.isEmpty());
 
         return null;
     }
 
-    private void relax(final BinaryMinHeap<Node> heap, final Node node, final Node neighbor,
-            final Node endNode) {
+    void handleNeighbors(Graph graph, BinaryMinHeap<Node> heap, Node node, Node goalNode) {
+        for (final Node neighbor : graph.findNodeNeighbors(node)) {
+            relax(heap, node, neighbor, goalNode);
+        }
+    }
+
+    void relax(final BinaryMinHeap<Node> heap, final Node node, final Node neighbor,
+            final Node goalNode) {
+        if (neighbor.isVisited()) {
+            return;
+        }
+
         final float distance = node.getPoint().distanceTo(neighbor.getPoint());
         if (neighbor.getStartDistance() > node.getStartDistance() + distance) {
             neighbor.setParent(node);
             neighbor.setStartDistance(node.getStartDistance() + distance);
 
-            final int dx = neighbor.getX() - endNode.getX();
-            final int dy = neighbor.getY() - endNode.getY();
+            final int dx = neighbor.getX() - goalNode.getX();
+            final int dy = neighbor.getY() - goalNode.getY();
             neighbor.setGoalDistance(mHeuristic.distance(dx, dy));
 
             heap.add(neighbor);
