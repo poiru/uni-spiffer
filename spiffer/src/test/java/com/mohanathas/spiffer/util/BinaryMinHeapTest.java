@@ -27,14 +27,13 @@ public class BinaryMinHeapTest {
         mHeap = new BinaryMinHeap<>();
     }
 
-    @Test(expected = NoSuchElementException.class)
     public void testPeekOnEmptyHeap() {
-        mHeap.peek();
+        assertNull(mHeap.peek());
     }
 
     private void assertPopOrder(int from, int to) {
         for (int i = from; i <= to; ++i) {
-            assertEquals(new Integer(i), mHeap.pop());
+            assertEquals(new Integer(i), mHeap.poll());
         }
     }
 

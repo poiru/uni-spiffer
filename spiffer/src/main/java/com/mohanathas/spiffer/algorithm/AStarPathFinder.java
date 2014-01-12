@@ -32,7 +32,7 @@ public class AStarPathFinder implements PathFinder {
         startNode.setQueued();
 
         do {
-            final Node node = heap.pop();
+            final Node node = heap.poll();
             node.setProcessed();
             if (node.equals(goalNode)) {
                 return node.getParentPoints();
