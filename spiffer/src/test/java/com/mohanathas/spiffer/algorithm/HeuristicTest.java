@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 /**
  * Tests the various Heuristic distances.
  */
-public class TestHeuristic {
+public class HeuristicTest {
     @Test
     public void testChebyshevHeuristic() {
         final Heuristic h = Heuristic.Chebyshev;
