@@ -56,6 +56,29 @@ public class BinaryMinHeap<T extends Comparable<T>> {
     }
 
     /**
+     * Reorders an existing element in the heap.
+     *
+     * @param t Previously added element that is to be reordered.
+     */
+    public void reorder(T t) {
+        int i;
+        for (i = 0; i < mSize; ++i) {
+            if (mElements[i] == t) {
+                break;
+            }
+        }
+
+        if (i >= mSize) {
+            throw new NoSuchElementException();
+        }
+
+        while (i > 0 && mElements[parent(i)].compareTo(t) > 0) {
+            swap(i, parent(i));
+            i = parent(i);
+        }
+    }
+
+    /**
      * Returns to topmost heap element without removing it.
      *
      * @return Topmost heap element.

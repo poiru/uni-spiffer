@@ -29,6 +29,7 @@ public class AStarPathFinder implements PathFinder {
         final BinaryMinHeap<Node> heap = new BinaryMinHeap<>();
         startNode.setStartDistance(0.0f);
         heap.add(startNode);
+        startNode.setQueued();
 
         do {
             final Node node = heap.pop();
@@ -59,11 +60,16 @@ public class AStarPathFinder implements PathFinder {
             neighbor.setParent(node);
             neighbor.setStartDistance(node.getStartDistance() + distance);
 
-            final int dx = neighbor.getX() - goalNode.getX();
-            final int dy = neighbor.getY() - goalNode.getY();
-            neighbor.setGoalDistance(mHeuristic.distance(dx, dy));
+            if (neighbor.isQueued()) {
+                heap.reorder(neighbor);
+            } else {
+                final int dx = neighbor.getX() - goalNode.getX();
+                final int dy = neighbor.getY() - goalNode.getY();
+                neighbor.setGoalDistance(mHeuristic.distance(dx, dy));
 
-            heap.add(neighbor);
+                heap.add(neighbor);
+                neighbor.setQueued();
+            }
         }
     }
 }

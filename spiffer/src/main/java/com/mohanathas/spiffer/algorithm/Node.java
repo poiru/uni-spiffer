@@ -18,6 +18,8 @@ import java.util.List;
  */
 class Node implements Comparable<Node> {
     private final Point mPoint;
+    private boolean mWalkable = true;
+    private Node mParent = null;
 
     /** Distance to the start node from the current node. */
     private float mStartDistance = Float.MAX_VALUE;
@@ -25,10 +27,8 @@ class Node implements Comparable<Node> {
     /** Distance to the goal node from the current node. */
     private float mGoalDistance = 0.0f;
 
-    private Node mParent = null;
-
-    private boolean mWalkable = true;
     private boolean mProcessed = false;
+    private boolean mQueued = false;
 
     public Node(int x, int y) {
         mPoint = new Point(x, y);
@@ -44,6 +44,22 @@ class Node implements Comparable<Node> {
 
     public Point getPoint() {
         return mPoint;
+    }
+
+    public boolean isWalkable() {
+        return mWalkable;
+    }
+
+    public void setWalkable(boolean walkable) {
+        mWalkable = walkable;
+    }
+
+    public Node getParent() {
+        return mParent;
+    }
+
+    public void setParent(Node parent) {
+        mParent = parent;
     }
 
     public float getStartDistance() {
@@ -62,20 +78,12 @@ class Node implements Comparable<Node> {
         mGoalDistance = distance;
     }
 
-    public Node getParent() {
-        return mParent;
+    public boolean isQueued() {
+        return mQueued;
     }
 
-    public void setParent(Node parent) {
-        mParent = parent;
-    }
-
-    public boolean isWalkable() {
-        return mWalkable;
-    }
-
-    public void setWalkable(boolean walkable) {
-        mWalkable = walkable;
+    public void setQueued() {
+        mQueued = true;
     }
 
     public boolean isProcessed() {
@@ -90,9 +98,10 @@ class Node implements Comparable<Node> {
      * Resets this fields of this instance to their initial state.
      */
     public void reset() {
+        mParent = null;
         mStartDistance = Float.MAX_VALUE;
         mGoalDistance = 0.0f;
-        mParent = null;
+        mQueued = false;
         mProcessed = false;
     }
 
