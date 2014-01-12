@@ -21,7 +21,7 @@ public abstract interface PathFinder {
      * @param graph Graph to search for the path.
      * @param startPoint Point to start the search from.
      * @param goalPoint Point that is to be reached from startNode.
-     * @return List of Points if a path was found or null otherwise.
+     * @return List of Points if a path was found or <tt>null</tt> otherwise.
      */
     List<Point> findPath(Graph graph, Point startPoint, Point goalPoint);
 }

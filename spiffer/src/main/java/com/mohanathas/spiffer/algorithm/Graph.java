@@ -99,20 +99,20 @@ public final class Graph {
     }
 
     /**
-     * Finds a list of Points connecting the nodes at |startPos| and |endPos|.
+     * Finds a list of points connecting the given start and goal points.
      *
      * @param finder A PathFinder instance used for the search.
-     * @param startPoint Start position.
-     * @param endPoint End point.
-     * @return List of Points if a path was found or |null| otherwise.
+     * @param startPoint Start point.
+     * @param goalPoint Goal point.
+     * @return List of Points if a path was found or <tt>null</tt> otherwise.
      */
-    public List<Point> findPath(PathFinder finder, Point startPoint, Point endPoint) {
+    public List<Point> findPath(PathFinder finder, Point startPoint, Point goalPoint) {
         if (mDirty) {
             // We need to clear e.g. the processed flag of the nodes.
             reset();
         }
 
-        final List<Point> path = finder.findPath(this, startPoint, endPoint);
+        final List<Point> path = finder.findPath(this, startPoint, goalPoint);
         mDirty = true;
         return path;
     }
@@ -220,7 +220,7 @@ public final class Graph {
      * Serializes the graph state to a string.
      *
      * @param startPoint Optional start point to include in the serialized string.
-     * @param goalPoint Optional end point to include in the serialized string.
+     * @param goalPoint Optional goal point to include in the serialized string.
      * @return Serialized representation of the graph.
      */
     public String serialize(Point startPoint, Point goalPoint) {
@@ -280,7 +280,7 @@ public final class Graph {
      * is treated as unwalkable and all others as walkable.
      *
      * @param ints Two dimensional int array representing the nodes.
-     * @return A Graph based on the |ints| array.
+     * @return A Graph based on the specified array.
      */
     public static Graph createFromIntArray(int[][] ints) {
         if (ints == null || ints.length == 0 || ints[0].length == 0) return null;
