@@ -18,16 +18,17 @@ import java.util.List;
  */
 class Node implements Comparable<Node> {
     private final Point mPoint;
-    private boolean mWalkable = true;
 
-    /**
-     * Distance to the start and end nodes from the current node.
-     */
+    /** Distance to the start node from the current node. */
     private float mStartDistance = Float.MAX_VALUE;
+
+    /** Distance to the goal node from the current node. */
     private float mGoalDistance = 0.0f;
 
     private Node mParent = null;
-    private boolean mVisited = false;
+
+    private boolean mWalkable = true;
+    private boolean mProcessed = false;
 
     public Node(int x, int y) {
         mPoint = new Point(x, y);
@@ -77,12 +78,12 @@ class Node implements Comparable<Node> {
         mWalkable = walkable;
     }
 
-    public boolean isVisited() {
-        return mVisited;
+    public boolean isProcessed() {
+        return mProcessed;
     }
 
-    public void markVisited() {
-        mVisited = true;
+    public void setProcessed() {
+        mProcessed = true;
     }
 
     /**
@@ -91,8 +92,8 @@ class Node implements Comparable<Node> {
     public void reset() {
         mStartDistance = Float.MAX_VALUE;
         mGoalDistance = 0.0f;
-        mVisited = false;
         mParent = null;
+        mProcessed = false;
     }
 
     /**

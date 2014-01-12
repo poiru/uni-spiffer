@@ -150,7 +150,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
     }
 
     /**
-     * Clears the walls (and also the solution line and visited nodes).
+     * Clears the walls (and also the solution line and visited boxes).
      */
     void clearWalls() {
         mSolutionPoints = null;

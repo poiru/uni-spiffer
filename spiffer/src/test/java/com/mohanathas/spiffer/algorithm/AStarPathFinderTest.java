@@ -31,16 +31,16 @@ public class AStarPathFinderTest {
         }
     }
 
-    static void assertVisitedCountEquals(int expected, Graph g) {
-        int visited = 0;
+    static void assertProcessedCountEquals(int expected, Graph g) {
+        int count = 0;
         for (int y = 0; y < g.getWidth(); ++y) {
             for (int x = 0; x < g.getWidth(); ++x) {
-                if (g.isVisited(new Point(x, y))) {
-                    ++visited;
+                if (g.wasProcessed(x, y)) {
+                    ++count;
                 }
             }
         }
-        assertEquals(expected, visited);
+        assertEquals(expected, count);
     }
 
     @Test
@@ -88,15 +88,15 @@ public class AStarPathFinderTest {
     }
 
     @Test
-    public void testVisitedCount() {
+    public void testProcessedCount() {
         final Graph g = new Graph(5, 5);
         final Point start = new Point(0, 0);
         final Point end = new Point(4, 4);
 
         assertNotNull(g.findPath(new DijkstraPathFinder(), start, end));
-        assertVisitedCountEquals(25, g);
+        assertProcessedCountEquals(25, g);
 
-        assertNotNull(g.findPath(new AStarPathFinder(Heuristic.Manhattan), start, end));
-        assertVisitedCountEquals(5, g);
+        assertNotNull(g.findPath(new AStarPathFinder(Heuristic.Euclidean), start, end));
+        assertProcessedCountEquals(5, g);
     }
 }

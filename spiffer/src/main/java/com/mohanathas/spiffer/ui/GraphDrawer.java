@@ -50,7 +50,7 @@ class GraphDrawer {
         g.setColor(VISITED_COLOR);
         for (int y = 0; y < graph.getHeight(); ++y) {
             for (int x = 0; x < graph.getWidth(); ++x) {
-                if (graph.isVisited(new Point(x, y))) {
+                if (graph.wasProcessed(x, y)) {
                     fillBox(g, x, y);
                 }
             }

@@ -8,7 +8,7 @@
 
 package com.mohanathas.spiffer.algorithm;
 
-import static com.mohanathas.spiffer.algorithm.AStarPathFinderTest.assertVisitedCountEquals;
+import static com.mohanathas.spiffer.algorithm.AStarPathFinderTest.assertProcessedCountEquals;
 import com.mohanathas.spiffer.util.Point;
 import java.util.List;
 import org.junit.Test;
@@ -79,7 +79,7 @@ public class JumpPointPathFinderTest {
     }
 
     @Test
-    public void testVisitedCount() {
+    public void testProcessedCount() {
         final Graph g = Graph.createFromIntArray(new int[][] {
             {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
             {1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1},
@@ -87,8 +87,8 @@ public class JumpPointPathFinderTest {
             {1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1},
             {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1}});
         assertNotNull(g.findPath(mPathFinder, new Point(0, 0), new Point(10, 4)));
-        assertVisitedCountEquals(15, g);
+        assertProcessedCountEquals(15, g);
         assertNotNull(g.findPath(mPathFinder, new Point(0, 2), new Point(10, 2)));
-        assertVisitedCountEquals(25, g);
+        assertProcessedCountEquals(25, g);
     }
 }

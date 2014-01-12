@@ -49,14 +49,19 @@ public final class Graph {
     }
 
     /**
-     * Checks if a point has been visited (by a call to |findPath|).
+     * Checks if a point was processed by a previous call to findPath.
      *
-     * @param point Point to check.
-     * @return True if the point has been visited.
+     * @param x X-position of the point to check.
+     * @param y Y-position of the point to check.
+     * @return True if the point has been walked.
      */
-    public boolean isVisited(Point point) {
-        final Node node = getNode(point);
-        return node != null ? node.isVisited() : false;
+    public boolean wasProcessed(int x, int y) {
+        final Node node = getNode(x, y);
+        return node != null ? node.isProcessed() : false;
+    }
+
+    public boolean wasProcessed(Point point) {
+        return wasProcessed(point.getX(), point.getY());
     }
 
     /**
@@ -103,7 +108,7 @@ public final class Graph {
      */
     public List<Point> findPath(PathFinder finder, Point startPoint, Point endPoint) {
         if (mDirty) {
-            // We need to clear e.g. the visited flag of the nodes.
+            // We need to clear e.g. the processed flag of the nodes.
             reset();
         }
 

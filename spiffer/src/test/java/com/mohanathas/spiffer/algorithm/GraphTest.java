@@ -115,7 +115,7 @@ public class GraphTest {
 
         g.setWalkable(1, 1, false);
         assertFalse(g.isWalkable(1, 1));
-        assertFalse(g.isVisited(new Point(1, 1)));
+        assertFalse(g.wasProcessed(1, 1));
     }
 
     @Test

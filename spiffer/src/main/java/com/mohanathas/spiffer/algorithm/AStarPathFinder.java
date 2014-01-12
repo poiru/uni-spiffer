@@ -32,7 +32,7 @@ public class AStarPathFinder implements PathFinder {
 
         do {
             final Node node = heap.pop();
-            node.markVisited();
+            node.setProcessed();
             if (node.equals(goalNode)) {
                 return node.getParentPoints();
             }
@@ -49,9 +49,8 @@ public class AStarPathFinder implements PathFinder {
         }
     }
 
-    void relax(final BinaryMinHeap<Node> heap, final Node node, final Node neighbor,
-            final Node goalNode) {
-        if (neighbor.isVisited()) {
+    void relax(BinaryMinHeap<Node> heap, Node node, Node neighbor, Node goalNode) {
+        if (neighbor.isProcessed()) {
             return;
         }
 
