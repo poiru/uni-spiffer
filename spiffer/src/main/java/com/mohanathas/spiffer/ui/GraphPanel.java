@@ -77,11 +77,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
         } else if (mGoalPoint.equals(point)) {
             mDragItem = DragItem.END;
         } else {
-            if (mGraph.isWall(point)) {
-                mDragItem = DragItem.UNWALL;
-            } else {
-                mDragItem = DragItem.WALL;
-            }
+            mDragItem = mGraph.isWalkable(point) ? DragItem.WALL : DragItem.UNWALL;
         }
     }
 
@@ -112,22 +108,22 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
         switch (mDragItem) {
             case WALL:
                 if (!mStartPoint.equals(point) && !mGoalPoint.equals(point)) {
-                    mGraph.setWall(point, true);
+                    mGraph.setWalkable(point, false);
                 }
                 break;
 
             case UNWALL:
-                mGraph.setWall(point, false);
+                mGraph.setWalkable(point, true);
                 break;
 
             case START:
-                if (!mGraph.isWall(point) && !mGoalPoint.equals(point)) {
+                if (mGraph.isWalkable(point) && !mGoalPoint.equals(point)) {
                     mStartPoint = point;
                 }
                 break;
 
             case END:
-                if (!mGraph.isWall(point) && !mStartPoint.equals(point)) {
+                if (mGraph.isWalkable(point) && !mStartPoint.equals(point)) {
                     mGoalPoint = point;
                 }
                 break;
@@ -158,7 +154,7 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
      */
     void clearWalls() {
         mSolutionPoints = null;
-        mGraph.clearWalls();
+        mGraph.setAllWalkable();
         mGraph.reset();
         repaint();
     }
@@ -174,11 +170,11 @@ public class GraphPanel extends JPanel implements MouseInputListener, MouseMotio
 
         // Ensure that the start point stays within the visible area.
         mStartPoint.set(Math.min(mStartPoint.getX(), w - 1), Math.min(mStartPoint.getY(), h - 1));
-        mGraph.setWall(mStartPoint, false);
+        mGraph.setWalkable(mStartPoint, true);
 
         // Ensure that the goal point stays within the visible area.
         mGoalPoint.set(Math.min(mGoalPoint.getX(), w - 1), Math.min(mGoalPoint.getY(), h - 1));
-        mGraph.setWall(mGoalPoint, false);
+        mGraph.setWalkable(mGoalPoint, true);
     }
 
     /**

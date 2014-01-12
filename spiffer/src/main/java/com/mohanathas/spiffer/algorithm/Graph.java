@@ -60,32 +60,37 @@ public final class Graph {
     }
 
     /**
-     * Checks if a point is a wall.
+     * Checks if a point is walkable.
      *
      * @param x X-position of the point to check.
      * @param y Y-position of the point to check.
-     * @return True if the point is a wall.
+     * @return True if the point is walkable.
      */
-    public boolean isWall(int x, int y) {
+    public boolean isWalkable(int x, int y) {
         final Node node = getNode(x, y);
-        return node != null ? node.isWall() : false;
+        return node != null ? node.isWalkable() : false;
     }
 
-    public boolean isWall(Point point) {
-        return isWall(point.getX(), point.getY());
+    public boolean isWalkable(Point point) {
+        return isWalkable(point.getX(), point.getY());
     }
 
     /**
-     * Sets or unsets a point as a wall.
+     * Sets the walkable state of a point.
      *
-     * @param point Point to set.
-     * @param wall New wall state of the point.
+     * @param x X-position of the point to set.
+     * @param y Y-position of the point to set.
+     * @param walkable New walkable state.
      */
-    public void setWall(Point point, boolean wall) {
-        final Node node = getNode(point);
+    public void setWalkable(int x, int y, boolean walkable) {
+        final Node node = getNode(x, y);
         if (node != null) {
-            node.setWall(wall);
+            node.setWalkable(walkable);
         }
+    }
+
+    public void setWalkable(Point point, boolean walkable) {
+        setWalkable(point.getX(), point.getY(), walkable);
     }
 
     /**
@@ -126,7 +131,7 @@ public final class Graph {
     }
 
     /**
-     * Finds the non-wall neighbors of the specified node.
+     * Finds the walkable neighbors of the specified node.
      *
      * @param node Node to get the neighbors of.
      * @return List of neighbor nodes.
@@ -140,16 +145,15 @@ public final class Graph {
                 }
 
                 final Node neighbor = getNode(node.getX() + x, node.getY() + y);
-                if (neighbor == null || neighbor.isWall()) {
+                if (neighbor == null || !neighbor.isWalkable()) {
                     continue;
                 }
 
                 // Skip diagonal neighbors if both shared neighbors between the node and the
-                // neighbor are walls.
-                final boolean diagonal = x != 0 && y != 0;
-                if (diagonal &&
-                    getNode(node.getX(), node.getY() + y).isWall() &&
-                    getNode(node.getX() + x, node.getY()).isWall()) {
+                // neighbor are unwalkable.
+                if (x != 0 && y != 0 &&
+                    !getNode(node.getX(), node.getY() + y).isWalkable() &&
+                    !getNode(node.getX() + x, node.getY()).isWalkable()) {
                     continue;
                 }
 
@@ -176,12 +180,12 @@ public final class Graph {
     }
 
     /**
-     * Marks all nodes as normal nodes.
+     * Sets all points to be walkable.
      */
-    public void clearWalls() {
+    public void setAllWalkable() {
         for (int y = 0; y < mGrid.length; ++y) {
             for (int x = 0; x < mGrid[y].length; ++x) {
-                mGrid[y][x].setWall(false);
+                mGrid[y][x].setWalkable(true);
             }
         }
     }
@@ -223,7 +227,7 @@ public final class Graph {
                     ch = 'S';
                 } else if (goalPoint != null && x == goalPoint.getX() && y == goalPoint.getY()) {
                     ch = 'G';
-                } else if (mGrid[y][x].isWall()) {
+                } else if (!mGrid[y][x].isWalkable()) {
                     ch = '#';
                 }
                 sb.append(ch);
@@ -258,7 +262,7 @@ public final class Graph {
                 } else if (ch == 'G' && goalPoint != null) {
                     goalPoint.set(x, y);
                 } else if (ch == '#' || ch == '.') {
-                    mGrid[y][x].setWall(ch == '#');
+                    mGrid[y][x].setWalkable(ch == '.');
                 }
             }
 
@@ -267,8 +271,8 @@ public final class Graph {
     }
 
     /**
-     * Helper method to create a Graph from a two dimensional array of ints. A
-     * integer value of 0 is treated as a wall and all others as a normal node.
+     * Helper method to create a Graph from a two dimensional array of ints. A integer value of 0
+     * is treated as unwalkable and all others as walkable.
      *
      * @param ints Two dimensional int array representing the nodes.
      * @return A Graph based on the |ints| array.
@@ -282,7 +286,7 @@ public final class Graph {
             for (int x = 0; x < ints[y].length; ++x) {
                 graph.mGrid[y][x] = new Node(x, y);
                 if (ints[y][x] == 0) {
-                    graph.mGrid[y][x].setWall(true);
+                    graph.mGrid[y][x].setWalkable(false);
                 }
             }
         }

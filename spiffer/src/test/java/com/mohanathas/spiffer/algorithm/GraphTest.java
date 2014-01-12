@@ -40,9 +40,9 @@ public class GraphTest {
     public void testDeserialize() {
         final Graph g = new Graph(3, 2);
         g.deserialize("#..\n.#.\n", null, null);
-        assertTrue(g.isWall(new Point(0, 0)));
-        assertTrue(!g.isWall(new Point(1, 0)));
-        assertTrue(g.isWall(new Point(1, 1)));
+        assertFalse(g.isWalkable(0, 0));
+        assertTrue(g.isWalkable(1, 0));
+        assertFalse(g.isWalkable(1, 1));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class GraphTest {
     public void testMalformedDeserialize() {
         final Graph g = new Graph(2, 2);
         g.deserialize("#.\n.####\n####\n", null, null);
-        assertTrue(!g.isWall(new Point(2, 2)));
+        assertFalse(g.isWalkable(2, 2));
     }
 
     @Test
@@ -78,22 +78,22 @@ public class GraphTest {
     }
 
     @Test
-    public void testSetWall() {
+    public void testSetWalkable() {
         final Graph g = new Graph(2, 2);
         final Point point = new Point(1, 1);
-        assertFalse(g.isWall(point));
-        g.setWall(point, true);
-        assertTrue(g.isWall(point));
+        assertTrue(g.isWalkable(point));
+        g.setWalkable(point, false);
+        assertFalse(g.isWalkable(point));
     }
 
     @Test
-    public void testClearWalls() {
+    public void testSetAllWalkable() {
         final Graph g = Graph.createFromIntArray(new int[][] {
             {0, 0},
             {0, 0}});
-        g.clearWalls();
-        assertFalse(g.isWall(new Point(0, 0)));
-        assertFalse(g.isWall(new Point(1, 1)));
+        g.setAllWalkable();
+        assertTrue(g.isWalkable(0, 0));
+        assertTrue(g.isWalkable(1, 1));
     }
 
     @Test
@@ -113,8 +113,8 @@ public class GraphTest {
         assertNull(g.getNode(1, 0));
         assertNull(g.getNode(0, 1));
 
-        g.setWall(new Point(1, 1), true);
-        assertFalse(g.isWall(new Point(1, 1)));
+        g.setWalkable(1, 1, false);
+        assertFalse(g.isWalkable(1, 1));
         assertFalse(g.isVisited(new Point(1, 1)));
     }
 

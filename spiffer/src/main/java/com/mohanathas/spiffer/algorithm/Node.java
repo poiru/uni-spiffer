@@ -18,7 +18,7 @@ import java.util.List;
  */
 class Node implements Comparable<Node> {
     private final Point mPoint;
-    private boolean mWall = false;
+    private boolean mWalkable = true;
 
     /**
      * Distance to the start and end nodes from the current node.
@@ -69,12 +69,12 @@ class Node implements Comparable<Node> {
         mParent = parent;
     }
 
-    public boolean isWall() {
-        return mWall;
+    public boolean isWalkable() {
+        return mWalkable;
     }
 
-    public void setWall(boolean wall) {
-        mWall = wall;
+    public void setWalkable(boolean walkable) {
+        mWalkable = walkable;
     }
 
     public boolean isVisited() {
