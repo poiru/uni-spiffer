@@ -38,6 +38,14 @@ public class DynamicArrayTest {
     }
 
     @Test
+    public void testReverse() {
+        mList.reverse();
+        assertEquals(new Integer(20), mList.get(0));
+        assertEquals(new Integer(11), mList.get(9));
+        assertEquals(new Integer(1), mList.get(19));
+    }
+
+    @Test
     public void testIsEmpty() {
         assertFalse(mList.isEmpty());
         assertTrue(new DynamicArray<Integer>().isEmpty());

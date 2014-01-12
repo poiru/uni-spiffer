@@ -9,7 +9,6 @@
 package com.mohanathas.spiffer.algorithm;
 
 import com.mohanathas.spiffer.util.Point;
-import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

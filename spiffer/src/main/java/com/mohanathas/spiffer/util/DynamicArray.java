@@ -105,6 +105,17 @@ public class DynamicArray<T> implements List<T> {
     }
 
     /**
+     * Reverses the elements of this list.
+     */
+    public void reverse() {
+        for (int i = 0; i < mSize / 2; ++i){
+            final T temp = mElements[i];
+            mElements[i] = mElements[mSize - i - 1];
+            mElements[mSize - i - 1] = temp;
+        }
+    }
+
+    /**
      * Returns <tt>true</tt> if this list contains no elements.
      *
      * @return <tt>true</tt> if this list contains no elements.
