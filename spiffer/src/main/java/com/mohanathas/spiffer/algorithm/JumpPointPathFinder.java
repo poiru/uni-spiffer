@@ -9,7 +9,7 @@
 package com.mohanathas.spiffer.algorithm;
 
 import com.mohanathas.spiffer.util.BinaryMinHeap;
-import java.util.ArrayList;
+import com.mohanathas.spiffer.util.DynamicArray;
 import java.util.List;
 
 /**
@@ -88,7 +88,7 @@ public class JumpPointPathFinder extends AStarPathFinder {
             return graph.findNodeNeighbors(node);
         }
 
-        final List<Node> neighbors = new ArrayList<>(5);
+        final List<Node> neighbors = new DynamicArray<>(5);
         final int x = node.getX();
         final int y = node.getY();
         final int dx = (x - parentNode.getX()) / Math.max(Math.abs(x - parentNode.getX()), 1);

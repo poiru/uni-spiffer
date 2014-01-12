@@ -8,8 +8,8 @@
 
 package com.mohanathas.spiffer.algorithm;
 
+import com.mohanathas.spiffer.util.DynamicArray;
 import com.mohanathas.spiffer.util.Point;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -109,7 +109,7 @@ class Node implements Comparable<Node> {
      * @return A list of parents excluding the furthest parent in reverse order.
      */
     public List<Point> getParentPoints() {
-        final List<Point> list = new ArrayList<>();
+        final List<Point> list = new DynamicArray<>();
         Node node = this;
         while (node != null) {
             list.add(node.mPoint);

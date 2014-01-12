@@ -8,8 +8,8 @@
 
 package com.mohanathas.spiffer.algorithm;
 
+import com.mohanathas.spiffer.util.DynamicArray;
 import com.mohanathas.spiffer.util.Point;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -142,7 +142,7 @@ public final class Graph {
      * @return List of neighbor nodes.
      */
     List<Node> findNodeNeighbors(Node node) {
-        final List<Node> neighbors = new ArrayList<>();
+        final List<Node> neighbors = new DynamicArray<>();
         for (int y = -1; y <= 1; ++y) {
             for (int x = -1; x <= 1; ++x) {
                 if (y == 0 && x == 0) {
